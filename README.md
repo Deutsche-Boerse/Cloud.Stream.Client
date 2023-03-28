@@ -121,7 +121,7 @@ Here's an example how to run `mdstream-client-cpp`
 Here's an example how to run `mdstream-client-python`
 ```
 python3 ./build/python/client.py --websocket-server [CLOUD_STREAM_SERVER] \   
-    --subject [STREAM] --username [USER] --password [PASSWORD]            \
+    --subject [STREAM] --username [USER] --password [PASSWORD]
 ```
 
 ## List of Parameters
