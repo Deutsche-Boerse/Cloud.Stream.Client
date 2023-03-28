@@ -114,15 +114,14 @@ make mdstream-client-python
 ## Running the Client
 Here's an example how to run `mdstream-client-cpp`
 ```
-./build/cpp/mdstream-client-cpp -s [CLOUD_STREAM_SERVER] \
-    -S [STREAM] -u [USER] -p [PASSOWRD]
+./build/cpp/mdstream-client-cpp --websocket-server [CLOUD_STREAM_SERVER]  \
+    --subject [STREAM] --username [USER] --password [PASSOWRD]
 ```
 
 Here's an example how to run `mdstream-client-python`
 ```
-python3 ./build/python/client.py                                            \   
-    -u [USER] -p [PASSWORD]                                                 \
-    -s [CLOUD_STREAM_SERVER]
+python3 ./build/python/client.py --websocket-server [CLOUD_STREAM_SERVER] \   
+    --subject [STREAM] --username [USER] --password [PASSWORD]            \
 ```
 
 ## List of Parameters
