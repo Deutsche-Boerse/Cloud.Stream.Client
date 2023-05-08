@@ -1,9 +1,21 @@
-By downloading content from the Deutsche Börse Group Github repository, you declare to
-Deutsche Börse AG, Mergenthalerallee 61, 65760 Eschborn, Germany, that you, and if you are acting for an organization
-you and such organization, understand and agree to the following: The content of this repository is provided to you by
-Deutsche Börse AG for illustrative purposes only.  It is provided “as” is without any express or implied guarantee or
-warranty of any kind, including without limitations any representations and warranties as to quality, absence of errors,
-timeliness or completeness. As the content is provided to you for free, Deutsche Börse shall not be liable for the
-content, except for its willful misconduct (“Vorsatz”) and gross negligence (“grobe Fahrlässigkeit”).
+MIT License
 
-This Disclaimer is governed by German Law.
+Copyright (c) 2023 Deutsche Börse Group
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
