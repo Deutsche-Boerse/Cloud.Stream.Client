@@ -1,5 +1,5 @@
-// Date:    20.01.2023
-// Version: 001.000.001
+// Date:    15.02.2023
+// Version: 001.000.002
 
 syntax = "proto3";
 
@@ -64,7 +64,6 @@ message Order
 		enum MDQuoteType		// FIX 1070
 		{
 			INDICATIVE = 0;
-			TRADEABLE = 1;
 			FIRM = 5;
 			WITHHELD = 6;
 			REFERENCE = 7;
@@ -79,7 +78,6 @@ message Order
 		{
 			DAY = 0;
 			GOOD_TILL_CANCEL = 1;
-			IMMEDIATE_OR_CANCEL = 3;
 			FILL_OR_KILL = 4;
 			GOOD_TILL_DATE = 6;
 			FILL_AND_KILL = 13;
@@ -92,8 +90,6 @@ message Order
 	enum ImpliedMarketIndicator
 	{
 		NOT_IMPLIED = 0;
-		IMPLIED_IN = 1;
-		IMPLIED_OUT = 2;
 		NATIVE = 5;
 		EXTERNAL = 6;
 		ALL = 7;
@@ -134,3 +130,4 @@ message Trade
 	// Timestamp
 	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
 }
+

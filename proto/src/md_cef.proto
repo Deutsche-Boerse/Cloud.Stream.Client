@@ -1,6 +1,8 @@
-// Date: 24.08.2022
+// Date:    09.06.2023
+// Version: 001.000.004
 
 syntax = "proto3";
+
 import "google/protobuf/wrappers.proto";
 
 package dbag.cef;
@@ -57,6 +59,7 @@ message Instrument
 		IRS = 14;				// Interest Rate Swap
 		SR = 15;				// Subscription Rights
 		WAR = 16;				// Warrant
+		ETF = 17;				// Exchange Traded Fund
 		OTHER = 99;				// Other
 	}
 
@@ -70,6 +73,17 @@ message Instrument
 
 		SettlMethod			Value			= 1;
 	}
+	
+	message ExerciseStyleValue
+	{
+		enum ExerciseStyle		// FIX 1194
+		{
+			E = 0;				// European
+			A = 1;				// American
+		}
+		
+		ExerciseStyle		Value			= 1;
+	}
 
 	message ContractTypeValue
 	{
@@ -82,20 +96,58 @@ message Instrument
 		ContractType		Value			= 1;
 	}
 
+	message SecurityUpdateActionValue
+	{
+		enum SecurityUpdateAction	// FIX 980
+		{
+			NEW = 0;			// 'A'
+			DELETE = 1;			// 'D'
+			MODIFY = 2;			// 'M'
+		}
+
+		SecurityUpdateAction	Value		= 1;
+	}
+
+	message Event
+	{
+		enum EventType
+		{
+			UNDEFINED = 0;
+			ACTIVATION = 5;
+			INACTIVATION = 6;
+			LAST_ELIGIBLE_TRADE_DATE = 7;
+			FIRST_ELIGIBLE_TRADE_DATE = 28;
+		}
+
+		EventType			EventTyp		= 1;	// FIX 865 EventType
+		uint32				Dt				= 2;	// FIX 866 EventDate
+	}
+
 	string					MktID			= 1;	// FIX 1301  MarketID
 	string					Sym				= 2;	// FIX 55 - Symbol
 	string					ID				= 3;	// FIX 48 - SecurityID
 	SecurityIDSource		Src				= 4;	// FIX 22 - SecurityIDSource
 	SecurityType			SecTyp			= 5;	// FIX 167 - SecurityType
 	string					Ccy				= 6;	// FIX 15 - Currency
+	string					AltID			= 7;	// FIX 455 - SecurityAltID
+	SecurityIDSource		AltIDSrc		= 8;	// FIX 456 - SecurityAltIDSource
+	string					MktSeg			= 9;	// FIX 7703 - MarketSegment
 
-	string					MMY				= 9;	// FIX 200 - MaturityMonthYear
-	google.protobuf.Int32Value	CntrDate	= 10;	// FIX T7 extension 30866 - ContractDate
-	ContractTypeValue		Ct				= 11;	// FIX CEF extension - ContractType
-	Decimal					OrigStrkPx		= 12;	// FIX 2578 - OrigStrikePrice
-	PutOrCallValue			PutCall			= 13;	// FIX 201 - PutOrCall
-	google.protobuf.Int32Value	CntrGenNr	= 14;	// FIX T7 extension 25034 - ContractGenerationNumber
-	SettlMethodValue		SettlMeth		= 15;	// FIX 1193 - SettlMethod
+	string					MMY				= 11;	// FIX 200 - MaturityMonthYear
+	google.protobuf.Int32Value	CntrDate	= 12;	// FIX T7 extension 30866 - ContractDate
+	ContractTypeValue		Ct				= 13;	// FIX CEF extension - ContractType
+	Decimal					StrkPx 			= 14;	// FIX 202 StrikePrice
+	Decimal					OrigStrkPx		= 15;	// FIX 2578 - OrigStrikePrice
+	PutOrCallValue			PutCall			= 16;	// FIX 201 - PutOrCall
+	google.protobuf.Int32Value	CntrGenNr	= 17;	// FIX T7 extension 25034 - ContractGenerationNumber
+	SettlMethodValue		SettlMeth		= 18;	// FIX 1193 - SettlMethod
+	ExerciseStyleValue		ExerStyle		= 19;	// FIX 1194 - ExerStyle
+
+	Decimal					MinPxIncr		= 21;	// FIX 969 - MinPriceIncrement
+
+	SecurityUpdateActionValue	UpdActn		= 30;	// FIX 980 - SecurityUpdateAction
+	uint64					LastUpdateTm	= 31;	// FIX 779 - LastUpdateTime
+	repeated Event			Evnts			= 32;	// FIX EventGroup
 }
 
 message QuoteSide
@@ -110,10 +162,23 @@ message QuoteSide
 		MDQuoteType			Value			= 1;
 	}
 
+	message MDEntryTypeValue {
+		enum MDEntryType		// FIX 269
+		{
+			BID = 0;
+			OFFER = 1;
+			MARKET_BID = 11;
+			MARKET_OFFER = 12;
+		}
+
+		MDEntryType			Value			= 1;
+	}
+
 	Decimal					Px				= 1;	// FIX 270 - MDEntryPrice
 	Decimal					Sz				= 2;	// FIX 271 - MDEntrySize
 	google.protobuf.Int32Value	NumOfOrds	= 3;	// FIX 346 - NumberOfOrders
 	MDQuoteTypeValue		MDQteTyp		= 4;	// FIX 1070 - MDQuoteType
+	MDEntryTypeValue		Typ				= 5;	// FIX 269 - MDEntryType
 }
 
 message Data
@@ -131,6 +196,7 @@ message Data
 			SUSPENDED = 9;
 			PUBLISHED = 10;
 			PENDING_DELETION = 11;
+			KNOCKED_OUT_AND_SUSPENDED = 12;
 		}
 
 		SecurityStatus				Value			= 1;
@@ -300,56 +366,95 @@ message Data
 		PriceType				Value			= 1;
 	}
 
+	message MarketSegmentStatusValue
+	{
+		enum MarketSegmentStatus	// FIX 2542
+		{
+			UNDEFINED = 0;
+			ACTIVE = 1;
+			INACTIVE = 2;
+			PUBLISHED = 3;
+		}
+
+		MarketSegmentStatus		Value			= 1;
+	}
+
+	message MDEntryPrices
+	{
+		enum MDEntryType
+		{
+			UNDEFINED = 0;
+			OPENING_PRICE = 1;							// FIX '4'
+			CLOSING_PRICE = 2;							// FIX '5'
+			SETTLEMENT_PRICE = 3;						// FIX '6'
+			OPEN_INTEREST = 4;							// FIX 'C'
+			AUCTION_CLEARING_PRICE = 5;					// FIX 'Q'
+			PREVIOUS_CLOSING_PRICE = 6;					// FIX 'e'
+			PRIOR_SETTLEMENT_PRICE = 7;					// FIX 'M'
+		}
+
+		MDEntryType				Typ				= 1;	// FIX 269 - MDEntryType
+		Decimal					Px				= 2;	// FIX 270 - MDEntryPrice
+		Decimal					Sz				= 3;	// FIX 271 - MDEntrySize
+		uint64					Tm				= 4;	// FIX 273 - MDEntryTime
+	}
+
 
 	// Quote
-	QuoteSide					Bid				= 1;	// MDEntryType = 0
-	QuoteSide					Offer			= 2;	// MDEntryType = 1
+	QuoteSide					Bid				= 1;	// MDEntryType = 0 or MDEntryType = 'b'
+	QuoteSide					Offer			= 2;	// MDEntryType = 1 or MDEntryType = 'c'
 	PriceTypeValue				PxTyp			= 3;	// FIX 423 - PriceType
 
 	// State Change
-	SecurityStatusValue			Status			= 4;	// FIX 965 - SecurityStatus
-	TradingSessionIDValue		SesID			= 5;	// FIX 336 - TradingSessionID
-	TradingSessionSubIDValue	SesSub			= 6;	// FIX 625 - TradingSessionSubID
-	google.protobuf.BoolValue	FastMktInd		= 7;	// FIX 2447 - FastMktInd
-	SecurityTradingStatusValue	TrdgStat		= 8;	// FIX 326 - SecurityTradingStatus
-	MarketConditionValue		MktCond			= 9;	// FIX 2705 - MarketCondition
+	SecurityStatusValue			Status			= 11;	// FIX 965 - SecurityStatus
+	TradingSessionIDValue		SesID			= 12;	// FIX 336 - TradingSessionID
+	TradingSessionSubIDValue	SesSub			= 13;	// FIX 625 - TradingSessionSubID
+	google.protobuf.BoolValue	FastMktInd		= 14;	// FIX 2447 - FastMktInd
+	SecurityTradingStatusValue	TrdgStat		= 15;	// FIX 326 - SecurityTradingStatus
+	MarketConditionValue		MktCond			= 16;	// FIX 2705 - MarketCondition
+	SecurityStatusValue			TesStatus		= 17;	// FIX 25045 - TESSecurityStatus
+	MarketSegmentStatusValue	MktSegStat		= 18;	// FIX 2542 - Market Segment Status
 
 	// Trade
-	Decimal						Px				= 10;	// FIX 270 - MDEntryPrice
-	Decimal						Sz				= 11;	// FIX 271 - MDEntrySize
-	TrdTypeValue				TrdTyp			= 12;	// FIX 828 - TrDType
-	google.protobuf.Int32Value	NumOfBuyOrds	= 13;	// FIX 2449 - NumberOfBuyOrders
-	google.protobuf.Int32Value	NumOfSellOrds	= 14;	// FIX 2450 - NumberOfSellOrders
-	MDOriginTypeValue			MDOrigTyp		= 15;	// FIX 1024 - MDOriginType
-	string						Ccy				= 16;	// FIX 15 - Currency
-	string						MDID			= 17;	// FIX 278 - MDEntryID
-	string						MtchID			= 18;	// FIX 880 - TrdMatchID (TVTIC - Trading Venue Transaction Identification Code)
-	MDUpdateActionValue			UpdtAct			= 19;	// FIX 279 - MDUpdateAction
-	repeated TradeCondition		TrdCond			= 20;	// FIX 277 - TradeCondition
+	Decimal						Px				= 21;	// FIX 270 - MDEntryPrice
+	Decimal						Sz				= 22;	// FIX 271 - MDEntrySize
+	TrdTypeValue				TrdTyp			= 23;	// FIX 828 - TrDType
+	google.protobuf.Int32Value	NumOfBuyOrds	= 24;	// FIX 2449 - NumberOfBuyOrders
+	google.protobuf.Int32Value	NumOfSellOrds	= 25;	// FIX 2450 - NumberOfSellOrders
+	MDOriginTypeValue			MDOrigTyp		= 26;	// FIX 1024 - MDOriginType
+	string						Ccy				= 27;	// FIX 15 - Currency
+	string						MDID			= 28;	// FIX 278 - MDEntryID
+	string						MtchID			= 29;	// FIX 880 - TrdMatchID (TVTIC - Trading Venue Transaction Identification Code)
+	MDUpdateActionValue			UpdtAct			= 30;	// FIX 279 - MDUpdateAction
+	repeated TradeCondition		TrdCond			= 31;	// FIX 277 - TradeCondition
 
 	// Book
-	repeated QuoteSide			Bids			= 21;	// MDEntryType = 0
-	repeated QuoteSide			Offers			= 22;	// MDEntryType = 1
+	repeated QuoteSide			Bids			= 41;	// MDEntryType = 0
+	repeated QuoteSide			Offers			= 42;	// MDEntryType = 1
 
 	// Clearing
-	Decimal						StlPx			= 23;	// FIX 270 FIX 269@6 - MDEntryPx + MDEntryType=6 (Settlement Price)
-	Decimal						Int				= 24;	// FIX 270 FIX 269@C - MDEntryPx + MDEntryType=C (Open Interest)
-	Decimal						SettlCurrAmt	= 25;	// FIX 119 - Settlement Currency Amount / Nominal Amount
-	string						SettlCcy		= 26;	// FIX 120 - Settlement Currency
+	Decimal						StlPx			= 51;	// FIX 270 FIX 269@6 - MDEntryPx + MDEntryType=6 (Settlement Price)
+	Decimal						Int				= 52;	// FIX 270 FIX 269@C - MDEntryPx + MDEntryType=C (Open Interest)
+	Decimal						SettlCurrAmt	= 53;	// FIX 119 - Settlement Currency Amount / Nominal Amount
+	string						SettlCcy		= 54;	// FIX 120 - Settlement Currency
 
 	// Statistics & Others
-	Decimal						PaPx			= 27;	// FIX - Potential Auction Price
-	Decimal						OpenPx			= 28;	// FIX 270 & FIX 269@4 - MDEntryPx + MDEntryType=4 (Opening Price)
-	Decimal						ClosePx			= 29;	// FIX 270 & FIX 269@5 - MDEntryPx + MDEntryType=5 (Closing Price)
-	Decimal						HighPx			= 30;	// FIX 332 - High Price
-	Decimal						LowPx			= 31;	// FIX 333 - Low Price
-	Decimal						AvgPx			= 32;	// Average Price
-	Decimal						TrdVol			= 33;	// FIX 1020 - Trade Volume
-	Decimal						Ttt				= 34;	// Total Turnover
-	google.protobuf.Int32Value	TrdNum			= 35;	// FIX 2490 - Trade Number
-	Decimal						PrevClsPx		= 36;	// FIX 140 - Previous Close Price
-	google.protobuf.UInt64Value	PreClsTim		= 37;	// FIX 343 - Previous Close Time
-	google.protobuf.UInt64Value	ClsTim			= 38;	// FIX 344 - Close Time
+	Decimal						PaPx			= 61;	// FIX - Potential Auction Price
+	Decimal						OpenPx			= 62;	// FIX 270 & FIX 269@4 - MDEntryPx + MDEntryType=4 (Opening Price)
+	Decimal						ClosePx			= 63;	// FIX 270 & FIX 269@5 - MDEntryPx + MDEntryType=5 (Closing Price)
+	Decimal						HighPx			= 64;	// FIX 332 - High Price
+	Decimal						LowPx			= 65;	// FIX 333 - Low Price
+	Decimal						AvgPx			= 66;	// Average Price
+	Decimal						TrdVol			= 67;	// FIX 1020 - Trade Volume
+	Decimal						Ttt				= 68;	// Total Turnover
+	google.protobuf.Int32Value	TrdNum			= 69;	// FIX 2490 - Trade Number
+	google.protobuf.Int32Value	TrdNumTes		= 70;	// Trade Number Tes
+	google.protobuf.UInt64Value	ClsTim			= 71;	// FIX 344 - Close Time
+	Decimal						RefPx			= 72;	// FIX 270 FIX 269@2 FIX 271=0 - MDEntryPx + MDEntryType=2 (Reference Price)
+	repeated MDEntryPrices		Pxs				= 73;	// FIX 269 & FIX 270 & FIX 271
+
+	// Reference
+	string						Val				= 81;	// FIX 234 - StipulationValue
 
 	// Timestamp
 	uint64						Tm				= 99;	// FIX 273 - MDEntryTime
