@@ -1,6 +1,8 @@
-// Date: 08.07.2022
+// Date:    15.02.2023
+// Version: 001.000.002
 
 syntax = "proto3";
+
 import "google/protobuf/any.proto";
 
 package Client;
@@ -36,6 +38,7 @@ enum Status {
 	OK = 0;
 	SERVER_ERROR = 1;
 	ACCESS_DENIED = 2;
+	NOT_ENTITLED = 3;
 }
 
 message Subscription
