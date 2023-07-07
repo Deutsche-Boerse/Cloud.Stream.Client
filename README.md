@@ -1,5 +1,5 @@
-# mdstream-client
-mdstream-client is a project designed to showcase of connectivity between
+# Cloud Stream Client
+Cloud Stream Client is designed to showcase of connectivity between
 client application through WebSocket communication with Cloud Stream.
 The project utilizes Protocol Buffers (protobuf) as a 
 language-neutral data serialization mechanism to efficiently exchange 
