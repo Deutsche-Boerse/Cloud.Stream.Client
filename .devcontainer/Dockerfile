@@ -65,6 +65,11 @@ RUN git clone --depth 1 https://github.com/nlohmann/json.git       && \
     cp -r json/include/nlohmann /usr/include/                      && \
     rm -rf json
 
+RUN pip install protobuf        && \
+    pip install requests        && \
+    pip install aiohttp         && \
+    pip install jwt
+
 COPY ${ARG_DOCKER_ENTRYPOINT} /home/root/
 RUN chmod +x /home/root/docker-entrypoint.sh
 

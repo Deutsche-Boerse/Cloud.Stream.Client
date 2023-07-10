@@ -12,9 +12,9 @@ DOCKER_FILE        ?= $(CONTAINER_DIR)/Dockerfile
 DOCKER_ENTRYPOINT  ?= $(CONTAINER_DIR)/docker-entrypoint.sh
 SHARED_DIRS        ?= $(WORK_DIR)
 
-DOCKER_HTTP_PROXY  ?=
-DOCKER_HTTPS_PROXY ?=
-DOCKER_NO_PROXY    ?=
+DOCKER_HTTP_PROXY  ?= $(HTTP_PROXY)
+DOCKER_HTTPS_PROXY ?= $(HTTPS_PROXY)
+DOCKER_NO_PROXY    ?= $(NO_PROXY)
 
 HELP_MSG          += \trun-container            Run\
 	a container from the ${IMAGE_NAME} image\n
