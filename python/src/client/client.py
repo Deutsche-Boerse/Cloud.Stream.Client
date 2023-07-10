@@ -221,7 +221,8 @@ async def handleWs(ws, qq):
     logging.info("handleWs finished")
 
 
-testsList = [(1,'{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":[{"stream": "md-tradegate"}]}}'),(10,'stop')]
+#testsList = [(1,'{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":[{"stream": "md-tradegate"}]}}'),(10,'stop')]
+testsList = []
 
 
 async def doTasks(ws, qq):
