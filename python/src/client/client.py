@@ -128,8 +128,6 @@ def log_message(message, flog):
         if l > 0:
             if args.msgFormat == "proto":
                 flog.write((l).to_bytes(4, byteorder="big", signed=False))
-                if args.timestampmsg:
-                    flog.write((time.time_ns()).to_bytes(8, byteorder="big", signed=False))
             flog.write(message.data)
         else:
             logging.info("got 0 bytes message")
