@@ -128,8 +128,6 @@ def log_message(message, flog):
         if l > 0:
             if args.msgFormat == "proto":
                 flog.write((l).to_bytes(4, byteorder="big", signed=False))
-                if args.timestampmsg:
-                    flog.write((time.time_ns()).to_bytes(8, byteorder="big", signed=False))
             flog.write(message.data)
         else:
             logging.info("got 0 bytes message")
@@ -221,8 +219,8 @@ async def handleWs(ws, qq):
     logging.info("handleWs finished")
 
 
+#testsList = [(1,'{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":[{"stream": "md-tradegate"}]}}'),(10,'stop')]
 testsList = []
-
 
 async def doTasks(ws, qq):
     """
@@ -253,6 +251,7 @@ async def start(qq):
             url=ws_url,
             headers=url_header,
             ssl=True,
+            #proxy='http://proxy',
             heartbeat=30,
             params={"format": args.msgFormat},
         ) as ws:
@@ -312,8 +311,8 @@ if __name__ == "__main__":
         del req
 
     # Validate that we can extract header information from JWT-Token
-    headers = verifyToken(args.token)
-    logging.info("Successfully extracted headers from JWT Token: {}".format(headers))
+    #headers = verifyToken(args.token)
+    #logging.info("Successfully extracted headers from JWT Token: {}".format(headers))
 
     url_header = {"Authorization": "Bearer " + args.token}
     ws_url = "wss://" + server + "/stream?format=" + args.msgFormat

@@ -2,19 +2,25 @@
 
 CONTAINER_DIR      ?= .devcontainer
 WORK_DIR           ?= $(shell pwd)/..
-USERNAME           ?= testuser
-USER_UID           ?= 1000
-USER_GID           ?= 1000
+USERNAME     = $(shell whoami)
+USER_UID     = $(shell id -u)
+USER_GID     = $(shell id -g)
+WORK_DIR     = $(shell pwd)/
+
+
+
+SHARED_DIRS  = /home/$(USERNAME)/.config    \
+            /home/$(USERNAME)/.ssh          \
+            $(WORK_DIR)
 
 IMAGE_NAME         ?= mdstream-client
 CONTAINER_NAME     ?= $(IMAGE_NAME)-$(USERNAME)-$(shell date +"%Y-%m-%d.%H-%M")
 DOCKER_FILE        ?= $(CONTAINER_DIR)/Dockerfile
 DOCKER_ENTRYPOINT  ?= $(CONTAINER_DIR)/docker-entrypoint.sh
-SHARED_DIRS        ?= $(WORK_DIR)
 
-DOCKER_HTTP_PROXY  ?=
-DOCKER_HTTPS_PROXY ?=
-DOCKER_NO_PROXY    ?=
+DOCKER_HTTP_PROXY  ?= $(HTTP_PROXY)
+DOCKER_HTTPS_PROXY ?= $(HTTPS_PROXY)
+DOCKER_NO_PROXY    ?= $(NO_PROXY)
 
 HELP_MSG          += \trun-container            Run\
 	a container from the ${IMAGE_NAME} image\n

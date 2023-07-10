@@ -31,6 +31,7 @@ RUN apt-get update                                  && \
     apt-get install -y git                          && \
     apt-get install -y cmake                        && \
     apt-get install -y sudo                         && \
+    apt-get install -y vim                          && \
     apt-get install -y python3                      && \
     apt-get install -y python3-pip 
 
@@ -64,6 +65,11 @@ RUN curl -LO https://github.com/machinezone/IXWebSocket/archive/refs/tags/v11.4.
 RUN git clone --depth 1 https://github.com/nlohmann/json.git       && \
     cp -r json/include/nlohmann /usr/include/                      && \
     rm -rf json
+
+RUN pip install protobuf        && \
+    pip install requests        && \
+    pip install aiohttp         && \
+    pip install jwt
 
 COPY ${ARG_DOCKER_ENTRYPOINT} /home/root/
 RUN chmod +x /home/root/docker-entrypoint.sh
