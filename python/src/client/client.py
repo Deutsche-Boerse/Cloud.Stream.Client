@@ -252,7 +252,7 @@ async def start(qq):
             url=ws_url,
             headers=url_header,
             ssl=True,
-            proxy='http://proxy.shrd.dbgcloud.io:3128',
+            #proxy='http://',
             heartbeat=30,
             params={"format": args.msgFormat},
         ) as ws:
