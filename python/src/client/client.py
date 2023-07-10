@@ -221,7 +221,7 @@ async def handleWs(ws, qq):
     logging.info("handleWs finished")
 
 
-testsList = []
+testsList = [(1,'{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":[{"stream": "md-tradegate"}]}}'),(10,'stop')]
 
 
 async def doTasks(ws, qq):
@@ -253,6 +253,7 @@ async def start(qq):
             url=ws_url,
             headers=url_header,
             ssl=True,
+            proxy='http://proxy.shrd.dbgcloud.io:3128',
             heartbeat=30,
             params={"format": args.msgFormat},
         ) as ws:
@@ -312,8 +313,8 @@ if __name__ == "__main__":
         del req
 
     # Validate that we can extract header information from JWT-Token
-    headers = verifyToken(args.token)
-    logging.info("Successfully extracted headers from JWT Token: {}".format(headers))
+    #headers = verifyToken(args.token)
+    #logging.info("Successfully extracted headers from JWT Token: {}".format(headers))
 
     url_header = {"Authorization": "Bearer " + args.token}
     ws_url = "wss://" + server + "/stream?format=" + args.msgFormat
