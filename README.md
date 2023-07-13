@@ -172,4 +172,3 @@ python3 ./build/python/client.py --websocket-server [CLOUD_STREAM_SERVER] \
 | `--recover-by-seq-id`    | Integer       | Recover message starting from ID                       |
 | `--recover-by-timestamp` | Integer       | Recover message from timestamp in nanosecond           |
 | `--msgFormat`            | String        | proto or json as message format delivered to client    |
-| `--msgFormat`            | String        | proto or json as message format delivered to client    |
