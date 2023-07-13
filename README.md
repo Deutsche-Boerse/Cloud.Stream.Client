@@ -73,7 +73,7 @@ from source code, the following dependencies are required.
 ### Project Structure
 The project is organized as follows.
 ```
-mdstream-client
+Cloud.Stream.Client
 ├── Makefile
 ├── README.md
 ├── build-image
@@ -113,8 +113,8 @@ mdstream-client
 ### Build Instructions
 1. Clone the repository:
 ```bash
-git clone https://github.com/deutsche-boerse/mdstream-client.git
-cd mdstream-client
+git clone https://github.com/deutsche-boerse/Cloud.Stream.Client.git
+cd Cloud.Stream.Client
 ```
 
 2. Build the Docker image. (optional)
