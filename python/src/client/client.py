@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import sys
+sys.path.append(r'proto/src')
 
 # Global imports
 import datetime
@@ -43,7 +45,9 @@ def queuereader_proc(queue):
     # Debug: Log messages
     fLogMsg = None
     if filename_d:
-        wf = "wb"
+        wf="w"
+        if "proto" == args.msgFormat:
+            wf = "wb"
         fLogMsg = open(filename_d, wf)
         logging.info("will dump messages to file:{}".format(filename_d))
     msg = "start"
@@ -219,7 +223,7 @@ async def handleWs(ws, qq):
     logging.info("handleWs finished")
 
 
-#testsList = [(1,'{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":[{"stream": "md-tradegate"}]}}'),(10,'stop')]
+#testsList = [(1,'{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":[{"stream": "md-tradegate"}]}}'),(30,"stop")]
 testsList = []
 
 async def doTasks(ws, qq):
@@ -241,6 +245,7 @@ async def start(qq):
     """
     Create the websocket connection and start the tasks
     """
+    https_proxy = os.environ.get('https_proxy')
     global mainTask, shutdownNow
     asyncio.current_task().set_name("start")
     async with aiohttp.ClientSession(
@@ -251,7 +256,7 @@ async def start(qq):
             url=ws_url,
             headers=url_header,
             ssl=True,
-            #proxy='http://proxy',
+            proxy=https_proxy,
             heartbeat=30,
             params={"format": args.msgFormat},
         ) as ws:
@@ -279,10 +284,18 @@ if __name__ == "__main__":
     server = args.websocket_server
     username = args.username
     password = args.password
-    args.msgFormat = "proto"
+    subject = args.subject
+    if subject != "":
+        cmd = '{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":['
+        sep = ""
+        for s in subject:
+            cmd = f'{cmd}{sep}{{"stream": "{s}"}}'
+            sep=", "
+        cmd = f"{cmd}]}}}}"
+        testsList.append((0,cmd))
     logging.info(
-        "server:{} username:{} password:xXxXxX format:{}".format(
-            server, username, args.msgFormat
+        "server:{} username:{} password:xXxXxX format:{} subject:{}".format(
+            server, username, args.msgFormat, subject
         )
     )
     # If no token is provided: Collect from username and password and persist it

@@ -29,8 +29,8 @@ class argParser:
         )
 
         # Output
-        self.parser.add_argument("-n", "--log_every_n_messages", default=1000, type=int)
-        self.parser.add_argument("--log-file", default="mdstreamclient.log")
+        self.parser.add_argument("-n", "--log_every_n_messages", default=100000, type=int)
+        self.parser.add_argument("--log-file", default="streamclient.log")
         self.parser.add_argument("--timestampmsg", action="store_true")
         self.parser.add_argument(
             "--no-log_messages", dest="log_messages", action="store_false"
@@ -42,6 +42,7 @@ class argParser:
         self.parser.add_argument("--recover-by-seq-id")
         self.parser.add_argument("--recover-by-timestamp")
 
+        self.parser.add_argument("--msgFormat", default="proto")
 
         self.args = self.parser.parse_args()
 
