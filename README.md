@@ -21,15 +21,19 @@ and instructions on how to build and run the client program.
 A Python client can be run with minimum effort. It is the same as the one used in Docker 
 
 First we need to make sure python3 is available.
-`$ python3 --version`
+
+```myuser:~/Cloud.Stream.Client$ $ python3 --version```
 
 Second we need to install the modules required
-`~/Cloud.Stream.Client$ pip3 install --user -r python/requirements.txt`
+
+```myuser:~/Cloud.Stream.Client$ pip3 install --user -r python/requirements.txt```
 
 Export the password as STREAMUSER and STREAMPASS environment variables
 
-Clone the repo and go to the root folder of the repo to run the command to start the python client and subscribe to your desired subject. For example:
-`~/Cloud.Stream.Client$ python3 python/src/client/client.py --websocket-server md.deutsche-boerse.com --subject md-tradegate --username $STREAMUSER --password $STREAMPASS --msgFormat json
+Clone the repo and go to the root folder of the repo to run the command to start the python client and subscribe to your desired subject.
+For example:
+
+```myuser:~/Cloud.Stream.Client$ python3 python/src/client/client.py --websocket-server md.deutsche-boerse.com --subject md-tradegate --username $STREAMUSER --password $STREAMPASS --msgFormat json```
 
 The messages are logged by default into streamclient.log
 The message format is proto by default, the above example uses json but proto is recommended.
@@ -37,7 +41,7 @@ The https_proxy variable must be exported if you run this from behind a proxy.
 
 Generally, feel free to modify the client.py before you run or other purposes
 ```
-~/Cloud.Stream.Client$ head -2 streamclient.log
+myuser:~/Cloud.Stream.Client$ head -2 streamclient.log
 {'subs': 'md-tradegate', 'messages': [{'@type': 'type.googleapis.com/Client.Response', 'requestId': '123456789', 'subscription': {'statusCode': 200}}]},
 {'subs': 'md-tradegate', 'seq': '356857164', 'messages': [{'@type': 'type.googleapis.com/dbag.cef.MarketData', 'Seq': {'ApplID': 2150, 'ApplSeqNum': '7255305109391986657'}, 'Instrmt': {'MktID': 'XGAT', 'Sym': 'LU1291109616', 'SecTyp': 'FUN'}, 'Dat': {'Bid': {'Px': {'m': '133401', 'e': -4}, 'Sz': {'m': '2000'}, 'MDQteTyp': {'Value': 'TRADEABLE'}, 'Typ': {}}, 'Offer': {'Px': {'m': '133519', 'e': -4}, 'Sz': {'m': '2000'}, 'MDQteTyp': {'Value': 'TRADEABLE'}, 'Typ': {'Value': 'OFFER'}}, 'Status': {'Value': 'ACTIVE'}, 'TrdgStat': {'Value': 'CONTINUOUS'}, 'Tm': '1689257358134000000'}}]}
 ```
