@@ -1,0 +1,133 @@
+// Date:    15.02.2023
+// Version: 001.000.002
+
+syntax = "proto3";
+
+package dbag.energy;
+
+message MarketDataReport
+{
+	enum  Event
+	{
+		UNKNOWN_EVENT = 0;
+		START_OF_REFERENCE_DATA = 1;
+		END_OF_REFERENCE_DATA = 2;
+	}
+
+	Event					Evt				= 1;
+	int32					Cnt				= 2;	// total message count of the current reference data cycle
+}
+
+message Instrument
+{
+	int32					Seq				= 1;	// technical sequece of the reference data stream
+
+	int64					ID				= 2;	// FIX 48 - SecurityID
+	string					Base			= 3;	// FIX 41251 - StreamCommodityBase
+	string					CmdtyType		= 4;	// FIX 41252 - StreamCommodityType
+	string					Desc			= 5;	// FIX 41255 - StreamCommodityDesc
+	uint64					Start			= 6;	// FIX 41055 - DeliveryScheduleSettlStart
+	uint64					End				= 7;	// FIX 41056 - DeliveryScheduleSettlEnd
+	string					Period			= 8;	// FIX 41266 - StreamCommodityNearbySettlDayPeriod
+	string					UOM				= 9;	// FIX 41258 - StreamCommodityUnitOfMeasure
+	int32					SIID			= 10;	// FIX 41253 - StreamCommoditySecurityID-InstID
+	int32					SSID			= 11;	// FIX 41253 - StreamCommoditySecurityID-SequenceID
+	int32					FIID			= 12;	// FIX 41253 - StreamCommoditySecurityID-FirstSequenceItemID
+	int32					SQID			= 13;	// FIX 41253 - StreamCommoditySecurityID-SecondSequenceItemID
+	string					EncDesc			= 14;	// FIX 41257 - EncodedStreamCommodityDesc
+	uint64					StartTm			= 15;	// FIX 341 - TradSesStartTime
+	uint64					EndTm			= 16;	// FIX 345 - TradSesEndTime
+}
+
+message MDUpdateActionValue {
+	enum MDUpdateAction	// FIX 279
+	{
+		NEW = 0;
+		CHANGE = 1;
+		DELETE = 2;
+		QUERY = 6;
+	}
+
+	MDUpdateAction      Value           = 1;
+}
+
+message Order
+{
+	enum MDEntryType	// FIX 269
+	{
+		BID = 0;
+		OFFER = 1;
+		BOTH = 2;
+	}
+
+	message MDQuoteTypeValue {
+		enum MDQuoteType		// FIX 1070
+		{
+			INDICATIVE = 0;
+			FIRM = 5;
+			WITHHELD = 6;
+			REFERENCE = 7;
+			ALL = 8;
+		}
+
+		MDQuoteType			Value			= 1;
+	}
+
+	message TimeInForceValue {
+		enum TimeInForce
+		{
+			DAY = 0;
+			GOOD_TILL_CANCEL = 1;
+			FILL_OR_KILL = 4;
+			GOOD_TILL_DATE = 6;
+			FILL_AND_KILL = 13;
+			MARKET_ORDER = 14;
+		}
+
+		TimeInForce			Value			= 1;
+	}
+
+	enum ImpliedMarketIndicator
+	{
+		NOT_IMPLIED = 0;
+		NATIVE = 5;
+		EXTERNAL = 6;
+		ALL = 7;
+		VENUE = 8;
+	}
+
+	enum ExecutionInstruction	// FIX 18
+	{
+		STAY_ON_OFFER_SIDE = 0;
+		ALL_OR_NONE = 1;
+	}
+
+	int64					ID				= 1;	// FIX 48 - SecurityID
+
+	string					MDID			= 2;	// FIX 278 - MDEntryID
+	MDEntryType				Typ				= 3;	// FIX 269 - MDEntryType
+	MDUpdateActionValue		UpdtAct			= 4;	// FIX 279 - MDUpdateAction
+	double					Px				= 5;	// FIX 270 - MDEntryPrice
+	double					Sz				= 6;	// FIX 271 - MDEntrySize
+	MDQuoteTypeValue		MDQteTyp		= 7;	// FIX 1070 - MDQuoteType
+	TimeInForceValue		TmInForce		= 8;	// FIX 59 - TimeInForce
+	ImpliedMarketIndicator	ImpldMktInd		= 9;	// FIX 1144 - ImpliedMarketIndicator
+	ExecutionInstruction	ExecInst		= 10;	// FIX 18 - Execution Instruction
+
+	// Timestamp
+	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
+
+message Trade
+{
+	int64					ID				= 1;	// FIX 48 - SecurityID
+
+	string					MDID			= 2;	// FIX 278 - MDEntryID
+	MDUpdateActionValue		UpdtAct			= 3;	// FIX 279 - MDUpdateAction
+	double					Px				= 4;	// FIX 270 - MDEntryPrice
+	double					Sz				= 5;	// FIX 271 - MDEntrySize
+
+	// Timestamp
+	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
+

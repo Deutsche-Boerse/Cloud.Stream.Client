@@ -1,0 +1,262 @@
+// Date:    15.02.2023
+// Version: 001.000.002
+
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package dbag.crypto;
+
+message MarketDataReport
+{
+	enum  Event
+	{
+		UNKNOWN_EVENT = 0;
+		START_OF_REFERENCE_DATA = 1;
+		END_OF_REFERENCE_DATA = 2;
+	}
+
+	Event					Evt				= 1;
+	int32					Cnt				= 2;	// total message count of the current reference data cycle
+}
+
+message Asset
+{
+	enum AssetClass
+	{
+		UNKNOWN_AC = 0;
+		CRYPTOCURRENCY = 101;
+		FIAT = 102;
+	}
+
+	int32					Seq				= 1;
+
+	string					AssetCode		= 2;
+	string					Name			= 3;
+	AssetClass				AssetClss		= 4;
+	repeated AssetClass		ScndAssetClss	= 5;
+}
+
+message Exchange
+{
+	enum ExchangeClass
+	{
+		UNDEFINED = 0;
+		CENTRAL = 1;
+		DECENTRAL = 2;
+	}
+
+	int32					Seq				= 1;
+
+	string					ExCode			= 2;
+	string					Name			= 3;
+	ExchangeClass			ExClss			= 4;
+}
+
+message InstrumentID
+{
+	enum InstrumentClass
+	{
+		UNKNOWN = 0;
+		SPOT = 1;
+		FUTURE = 2;
+		PERPETUAL_FUTURE = 3;
+		OPTION = 4;
+		OPTION_COMBO = 5;
+		FUTURE_COMBO = 6;
+	}
+
+	string					InstCode		= 1;	// Unique Instrument Identifier
+	string					ExCode			= 2;	// Exchange Code
+	InstrumentClass			Clss			= 3;	// Instrument Class [spot, future, perpetual-future, option, option_combo, future_combo]
+}
+
+message Instrument
+{
+	message PutOrCallValue
+	{
+		enum PutOrCall
+		{
+			PUT = 0;
+			CALL = 1;
+		}
+
+		PutOrCall           Value           = 1;
+	}
+
+	int32					Seq				= 1;
+
+	InstrumentID			ID				= 2;	// Code + Exchange
+	string					BaseAsset		= 3;	// Base Asset
+	string					QuoteAsset		= 4;	// Quote Asset
+	string					ExchPairCod		= 5;	// Exchange Pair Code
+	uint64					StrtTm			= 6;
+	uint64					EndTm			= 7;
+	repeated string			Pools			= 8;	// List of underlying pools
+
+	uint64					Expiry			= 9;	// Expiry date+time
+	google.protobuf.DoubleValue				StrkPx			= 10;	// Strike Price
+	PutOrCallValue          PutCall			= 11;	// Put Or Call
+	google.protobuf.DoubleValue				Mult			= 12;	// Contract Multiplier / Contract Size
+
+	string					Stream			= 13;	// DBAG's crypto instrument classification based on the base asset, e.g. "top5"
+}
+
+message Pool
+{
+	int32					Seq				= 1;
+
+	string					Address			= 2;
+	string					Name			= 3;
+	string					Protocol		= 4;
+	string					Type			= 5;
+	string					Fee				= 6;
+	repeated string			Tokens			= 7;
+	repeated string			UndrTokens		= 8;	// underlying tokens
+	string					TickSpacing		= 9;
+	repeated string			Weights			= 10;
+}
+
+message MarketDataUpdate
+{
+	message MDUpdateActionValue {
+		enum MDUpdateAction	// FIX 279
+		{
+			NEW = 0;
+			CHANGE = 1;
+			DELETE = 2;
+		}
+
+		MDUpdateAction      Value           = 1;
+	}
+
+	string					SeqID			= 1;
+	InstrumentID			ID				= 2;	// Code + Exchange
+
+	MDUpdateActionValue		UpdtAct			= 3;	// FIX 279 - MDUpdateAction
+	string					MDID			= 4;	// FIX 278 - MDEntryID
+
+	double					Px				= 5;
+	double					Sz				= 6;
+
+	// Timestamp
+	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
+
+message TopOfBookUpdate
+{
+	enum MDEntryType	// FIX 269
+	{
+		BID = 0;
+		OFFER = 1;
+	}
+
+	message MDUpdateActionValue {
+		enum MDUpdateAction	// FIX 279
+		{
+			NEW = 0;
+			CHANGE = 1;
+			DELETE = 2;
+		}
+
+		MDUpdateAction      Value           = 1;
+	}
+	
+	InstrumentID			ID				= 1;	// Code + Exchange
+	string					SeqID			= 2;
+
+	MDEntryType				Typ				= 3;
+	MDUpdateActionValue		UpdtAct			= 4;
+
+	double					Px				= 5;
+	double					Sz				= 6;
+
+	// Timestamp
+	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
+
+message Trade
+{
+	message MDUpdateActionValue {
+		enum MDUpdateAction	// FIX 279
+		{
+			NEW = 0;
+			CHANGE = 1;
+			DELETE = 2;
+		}
+
+		MDUpdateAction      Value           = 1;
+	}
+
+	message AggressorSideValue {
+		enum AggressorSide // FIX 2446
+		{
+			NO_AGGRESSOR = 0;
+			BUY = 1;
+			SELL = 2;
+		}
+
+		AggressorSide       Value           = 1;
+	}
+
+	InstrumentID			ID				= 1;	// Code + Exchange
+	string					SeqID			= 2;
+
+	MDUpdateActionValue		UpdtAct			= 3;	// FIX 279 - MDUpdateAction
+	string					MDID			= 4;	// FIX 278 - MDEntryID
+
+	double					Px				= 5;
+	double					Sz				= 6;
+
+	AggressorSideValue		AgrsrSide		= 7;	// FIX 2446 - AggressorSide
+
+	// Timestamp
+	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
+
+
+message MarketDataSnapshot
+{
+	message QuoteSide
+	{
+		double				Px				= 1;	// FIX 270 - MDEntryPrice
+		double				Sz				= 2;	// FIX 271 - MDEntrySize
+	}
+
+	InstrumentID			ID				= 1;	// Code + Exchange
+	string					LstSeqID		= 2;	// Sequence ID of the latest incremental update
+													// which is covered by the snapshot
+
+	// Book
+	repeated QuoteSide		Bids			= 4;	// FIX MDEntryType = 0
+	repeated QuoteSide		Offers			= 5;	// FIX MDEntryType = 1
+
+	// Timestamp
+	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
+
+message Rate
+{
+	enum IndexType
+	{
+		PRICE_RATE = 0;
+		REFERENCE_RATE = 1;
+	}
+
+	enum Commodity
+	{
+		REAL_TIME = 0;
+		FIXING = 1;
+	}
+
+	IndexType				Typ				= 1;
+	string					IndexCode		= 2;
+	string					BaseAsset		= 3;	// Base Asset
+	string					QuoteAsset		= 4;	// Quote Asset
+	Commodity				Cty				= 5;
+	uint64					StrtTm			= 6;
+	uint64					EndTm			= 7;
+	double					Px				= 8;
+
+	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
