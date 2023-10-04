@@ -1,4 +1,0 @@
-This folder will contain .proto files for simulation environment
-They are going to be installed in production at some point.
-
-To see the changes you can compare them with the current production version available under the proto/src or versions in older folders

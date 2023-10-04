@@ -1,5 +1,5 @@
-// Date:    15.02.2023
-// Version: 001.000.002
+// Date:    28.09.2023
+// Version: 001.000.005
 
 syntax = "proto3";
 
@@ -41,25 +41,11 @@ enum Status {
 	NOT_ENTITLED = 3;
 }
 
-message Subscription
-{
-	Status				status = 1;
-	int32				statusCode = 2;
-}
-
-message Unsubscription
-{
-	Status				status = 1;
-	int32				statusCode = 2;
-}
-
+//one Response for each stream in Request
 message Response
 {
 	int64				requestId = 1;
-	//oneof data {
-		Subscription	subscription = 2;
-		Unsubscription	unsubscription = 3;
-	//}
+	Status				status = 2;
 }
 
 message StreamMessage
