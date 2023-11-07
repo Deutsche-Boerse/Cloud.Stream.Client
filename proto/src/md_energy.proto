@@ -1,5 +1,5 @@
-// Date:    28.09.2023
-// Version: 001.000.005
+// Date:    07.10.2023
+// Version: 001.000.006
 
 syntax = "proto3";
 
@@ -104,7 +104,7 @@ message Order
 
 	int64					ID				= 1;	// FIX 48 - SecurityID
 
-	string					MDID			= 2;	// FIX 278 - MDEntryID
+	string					OrdID			= 2;	// FIX 37 - OrderID
 	MDEntryType				Typ				= 3;	// FIX 269 - MDEntryType
 	MDUpdateActionValue		UpdtAct			= 4;	// FIX 279 - MDUpdateAction
 	double					Px				= 5;	// FIX 270 - MDEntryPrice
@@ -113,6 +113,7 @@ message Order
 	TimeInForceValue		TmInForce		= 8;	// FIX 59 - TimeInForce
 	ImpliedMarketIndicator	ImpldMktInd		= 9;	// FIX 1144 - ImpliedMarketIndicator
 	ExecutionInstruction	ExecInst		= 10;	// FIX 18 - Execution Instruction
+	string					RefOrdID		= 11;	// FIX 1080 - RefOrderID
 
 	// Timestamp
 	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
@@ -122,7 +123,7 @@ message Trade
 {
 	int64					ID				= 1;	// FIX 48 - SecurityID
 
-	string					MDID			= 2;	// FIX 278 - MDEntryID
+	string					TrdID			= 2;	// FIX 1003 - TradeID
 	MDUpdateActionValue		UpdtAct			= 3;	// FIX 279 - MDUpdateAction
 	double					Px				= 4;	// FIX 270 - MDEntryPrice
 	double					Sz				= 5;	// FIX 271 - MDEntrySize
@@ -130,4 +131,3 @@ message Trade
 	// Timestamp
 	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
 }
-
