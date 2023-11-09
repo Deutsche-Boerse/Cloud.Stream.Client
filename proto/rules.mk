@@ -51,6 +51,7 @@ $(PROTO_PY):  $(PROTO_OBJ_PY)
 
 $(PROTO_PY_OUT)/%_pb2.py: $(PROTO_DIR)/$(PROTO_SRC_DIR)/%.proto | $(PROTO_PY_OUT)
 	$(PROTOC) --python_out=$(PROTO_PY_OUT) -I$(PROTO_DIR)/$(PROTO_SRC_DIR) $<
+	$(PROTOC) --python_out=$(PROTO_DIR)/$(PROTO_SRC_DIR) -I$(PROTO_DIR)/$(PROTO_SRC_DIR) $<
 
 $(PROTO_PY_OUT):
 	mkdir -p $(PROTO_PY_OUT)
