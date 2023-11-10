@@ -1,5 +1,5 @@
-// Date:    28.09.2023
-// Version: 001.000.005
+// Date:    07.10.2023
+// Version: 001.000.006
 
 syntax = "proto3";
 
@@ -300,6 +300,7 @@ message Data
 			BLOCKTRADEATMARKET = 1004;
 			XETRAEUREXENLIGHTTRIGGEREDTRADE = 1006;
 			BLOCKQTPIPTRADE = 1007;
+			DELTATRADEATMARKET = 1017;
 			OPENINGAUCTIONTRADE = 1100;
 			INTRADAYAUCTIONTRADE = 1101;
 			VOLATILITYAUCTIONTRADE = 1102;
@@ -344,12 +345,13 @@ message Data
 		AX = 4;		// FIX High Price
 		AY = 5;		// FIX Low Price
 		BD = 6;		// FIX Previous Closing Price
-		BB = 7;		// FIX Midpoint Price
+		BB = 7;		// FIX Midpoint Price //TODO cleanup this in T7 12.1
 		BC = 8;		// FIX Trading On Terms Of issue
 		SA = 9;		// FIX Special Auction
 		TC = 10;	// FIX Trade At Close
 		k = 11;		// FIX Out of Sequence
 		a = 12;		// FIX Volume Only
+		XR = 13;		// Retail 
 	}
 
 	message PriceTypeValue
