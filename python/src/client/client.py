@@ -316,7 +316,7 @@ if __name__ == "__main__":
         )
         if req.status_code >= 400:
             invalid_request_reason = req.text
-            loggin.info(f"failed because: {invalid_request_reason}")
+            logging.info(f"failed because: {invalid_request_reason}")
         args.token = req.json()["AccessToken"]
 
         # Cleanup sensitive data

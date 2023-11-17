@@ -4,6 +4,7 @@ ARG ARG_HTTP_PROXY
 ARG ARG_HTTPS_PROXY
 ARG ARG_NO_PROXY
 ARG ARG_DOCKER_ENTRYPOINT
+ARG BRANCH
 
 ENV HTTP_PROXY  ${ARG_HTTP_PROXY}
 ENV HTTPS_PROXY ${ARG_HTTPS_PROXY}
@@ -11,6 +12,7 @@ ENV NO_PROXY    ${ARG_NO_PROXY}
 ENV http_proxy  ${ARG_HTTP_PROXY}
 ENV https_proxy ${ARG_HTTPS_PROXY}
 ENV no_proxy    ${ARG_NO_PROXY}
+ENV BRANCH      ${BRANCH:-main}
 
 RUN touch /etc/apt/apt.conf.d/proxy.conf                    && \
     echo "Acquire::http::Proxy \"${ARG_HTTP_PROXY}\";"          \
@@ -73,6 +75,7 @@ RUN pip install protobuf        && \
 
 RUN git clone https://github.com/Deutsche-Boerse/Cloud.Stream.Client.git && \
     cd Cloud.Stream.Client && \
+    git checkout ${BRANCH} && \
     pip install --no-cache-dir -r python/requirements.txt && \
     make clean && \
     make proto-python
