@@ -1,5 +1,5 @@
-// Date:    07.10.2023
-// Version: 001.000.006
+// Date:    24.04.2024
+// Version: 001.000.007
 
 syntax = "proto3";
 
@@ -130,4 +130,11 @@ message Trade
 
 	// Timestamp
 	uint64					Tm				= 99;	// FIX 273 - MDEntryTime
+}
+
+message Settlement
+{
+     int64					ID				= 1;  // FIX 48  - SecurityID
+     double					SetlPx			= 2;  // FIX 730 - SettlPrice
+     uint64					Tm				= 99; // FIX 273 - MDEntryTime
 }
