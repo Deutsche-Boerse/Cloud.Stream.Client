@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fmd_energy.proto\x12\x0b\x64\x62\x61g.energy\"\xa5\x01\n\x10MarketDataReport\x12\x30\n\x03\x45vt\x18\x01 \x01(\x0e\x32#.dbag.energy.MarketDataReport.Event\x12\x0b\n\x03\x43nt\x18\x02 \x01(\x05\"R\n\x05\x45vent\x12\x11\n\rUNKNOWN_EVENT\x10\x00\x12\x1b\n\x17START_OF_REFERENCE_DATA\x10\x01\x12\x19\n\x15\x45ND_OF_REFERENCE_DATA\x10\x02\"\xf6\x01\n\nInstrument\x12\x0b\n\x03Seq\x18\x01 \x01(\x05\x12\n\n\x02ID\x18\x02 \x01(\x03\x12\x0c\n\x04\x42\x61se\x18\x03 \x01(\t\x12\x11\n\tCmdtyType\x18\x04 \x01(\t\x12\x0c\n\x04\x44\x65sc\x18\x05 \x01(\t\x12\r\n\x05Start\x18\x06 \x01(\x04\x12\x0b\n\x03\x45nd\x18\x07 \x01(\x04\x12\x0e\n\x06Period\x18\x08 \x01(\t\x12\x0b\n\x03UOM\x18\t \x01(\t\x12\x0c\n\x04SIID\x18\n \x01(\x05\x12\x0c\n\x04SSID\x18\x0b \x01(\x05\x12\x0c\n\x04\x46IID\x18\x0c \x01(\x05\x12\x0c\n\x04SQID\x18\r \x01(\x05\x12\x0f\n\x07\x45ncDesc\x18\x0e \x01(\t\x12\x0f\n\x07StartTm\x18\x0f \x01(\x04\x12\r\n\x05\x45ndTm\x18\x10 \x01(\x04\"\x93\x01\n\x13MDUpdateActionValue\x12>\n\x05Value\x18\x01 \x01(\x0e\x32/.dbag.energy.MDUpdateActionValue.MDUpdateAction\"<\n\x0eMDUpdateAction\x12\x07\n\x03NEW\x10\x00\x12\n\n\x06\x43HANGE\x10\x01\x12\n\n\x06\x44\x45LETE\x10\x02\x12\t\n\x05QUERY\x10\x06\"\xdb\x07\n\x05Order\x12\n\n\x02ID\x18\x01 \x01(\x03\x12\r\n\x05OrdID\x18\x02 \x01(\t\x12+\n\x03Typ\x18\x03 \x01(\x0e\x32\x1e.dbag.energy.Order.MDEntryType\x12\x31\n\x07UpdtAct\x18\x04 \x01(\x0b\x32 .dbag.energy.MDUpdateActionValue\x12\n\n\x02Px\x18\x05 \x01(\x01\x12\n\n\x02Sz\x18\x06 \x01(\x01\x12\x35\n\x08MDQteTyp\x18\x07 \x01(\x0b\x32#.dbag.energy.Order.MDQuoteTypeValue\x12\x36\n\tTmInForce\x18\x08 \x01(\x0b\x32#.dbag.energy.Order.TimeInForceValue\x12>\n\x0bImpldMktInd\x18\t \x01(\x0e\x32).dbag.energy.Order.ImpliedMarketIndicator\x12\x39\n\x08\x45xecInst\x18\n \x01(\x0e\x32\'.dbag.energy.Order.ExecutionInstruction\x12\x10\n\x08RefOrdID\x18\x0b \x01(\t\x12\n\n\x02Tm\x18\x63 \x01(\x04\x1a\xa1\x01\n\x10MDQuoteTypeValue\x12>\n\x05Value\x18\x01 \x01(\x0e\x32/.dbag.energy.Order.MDQuoteTypeValue.MDQuoteType\"M\n\x0bMDQuoteType\x12\x0e\n\nINDICATIVE\x10\x00\x12\x08\n\x04\x46IRM\x10\x05\x12\x0c\n\x08WITHHELD\x10\x06\x12\r\n\tREFERENCE\x10\x07\x12\x07\n\x03\x41LL\x10\x08\x1a\xcb\x01\n\x10TimeInForceValue\x12>\n\x05Value\x18\x01 \x01(\x0e\x32/.dbag.energy.Order.TimeInForceValue.TimeInForce\"w\n\x0bTimeInForce\x12\x07\n\x03\x44\x41Y\x10\x00\x12\x14\n\x10GOOD_TILL_CANCEL\x10\x01\x12\x10\n\x0c\x46ILL_OR_KILL\x10\x04\x12\x12\n\x0eGOOD_TILL_DATE\x10\x06\x12\x11\n\rFILL_AND_KILL\x10\r\x12\x10\n\x0cMARKET_ORDER\x10\x0e\"+\n\x0bMDEntryType\x12\x07\n\x03\x42ID\x10\x00\x12\t\n\x05OFFER\x10\x01\x12\x08\n\x04\x42OTH\x10\x02\"W\n\x16ImpliedMarketIndicator\x12\x0f\n\x0bNOT_IMPLIED\x10\x00\x12\n\n\x06NATIVE\x10\x05\x12\x0c\n\x08\x45XTERNAL\x10\x06\x12\x07\n\x03\x41LL\x10\x07\x12\t\n\x05VENUE\x10\x08\"?\n\x14\x45xecutionInstruction\x12\x16\n\x12STAY_ON_OFFER_SIDE\x10\x00\x12\x0f\n\x0b\x41LL_OR_NONE\x10\x01\"y\n\x05Trade\x12\n\n\x02ID\x18\x01 \x01(\x03\x12\r\n\x05TrdID\x18\x02 \x01(\t\x12\x31\n\x07UpdtAct\x18\x03 \x01(\x0b\x32 .dbag.energy.MDUpdateActionValue\x12\n\n\x02Px\x18\x04 \x01(\x01\x12\n\n\x02Sz\x18\x05 \x01(\x01\x12\n\n\x02Tm\x18\x63 \x01(\x04\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fmd_energy.proto\x12\x0b\x64\x62\x61g.energy\"\xc3\x01\n\x10MarketDataReport\x12\x30\n\x03\x45vt\x18\x01 \x01(\x0e\x32#.dbag.energy.MarketDataReport.Event\x12\x0b\n\x03\x43nt\x18\x02 \x01(\x05\x12\x0c\n\x04\x42\x61se\x18\x03 \x01(\t\"b\n\x05\x45vent\x12\x11\n\rUNKNOWN_EVENT\x10\x00\x12\x1b\n\x17START_OF_REFERENCE_DATA\x10\x01\x12\x19\n\x15\x45ND_OF_REFERENCE_DATA\x10\x02\x12\x0e\n\nFEED_RESET\x10\x03\"\xf6\x01\n\nInstrument\x12\x0b\n\x03Seq\x18\x01 \x01(\x05\x12\n\n\x02ID\x18\x02 \x01(\x03\x12\x0c\n\x04\x42\x61se\x18\x03 \x01(\t\x12\x11\n\tCmdtyType\x18\x04 \x01(\t\x12\x0c\n\x04\x44\x65sc\x18\x05 \x01(\t\x12\r\n\x05Start\x18\x06 \x01(\x04\x12\x0b\n\x03\x45nd\x18\x07 \x01(\x04\x12\x0e\n\x06Period\x18\x08 \x01(\t\x12\x0b\n\x03UOM\x18\t \x01(\t\x12\x0c\n\x04SIID\x18\n \x01(\x05\x12\x0c\n\x04SSID\x18\x0b \x01(\x05\x12\x0c\n\x04\x46IID\x18\x0c \x01(\x05\x12\x0c\n\x04SQID\x18\r \x01(\x05\x12\x0f\n\x07\x45ncDesc\x18\x0e \x01(\t\x12\x0f\n\x07StartTm\x18\x0f \x01(\x04\x12\r\n\x05\x45ndTm\x18\x10 \x01(\x04\"\x93\x01\n\x13MDUpdateActionValue\x12>\n\x05Value\x18\x01 \x01(\x0e\x32/.dbag.energy.MDUpdateActionValue.MDUpdateAction\"<\n\x0eMDUpdateAction\x12\x07\n\x03NEW\x10\x00\x12\n\n\x06\x43HANGE\x10\x01\x12\n\n\x06\x44\x45LETE\x10\x02\x12\t\n\x05QUERY\x10\x06\"\xdb\x07\n\x05Order\x12\n\n\x02ID\x18\x01 \x01(\x03\x12\r\n\x05OrdID\x18\x02 \x01(\t\x12+\n\x03Typ\x18\x03 \x01(\x0e\x32\x1e.dbag.energy.Order.MDEntryType\x12\x31\n\x07UpdtAct\x18\x04 \x01(\x0b\x32 .dbag.energy.MDUpdateActionValue\x12\n\n\x02Px\x18\x05 \x01(\x01\x12\n\n\x02Sz\x18\x06 \x01(\x01\x12\x35\n\x08MDQteTyp\x18\x07 \x01(\x0b\x32#.dbag.energy.Order.MDQuoteTypeValue\x12\x36\n\tTmInForce\x18\x08 \x01(\x0b\x32#.dbag.energy.Order.TimeInForceValue\x12>\n\x0bImpldMktInd\x18\t \x01(\x0e\x32).dbag.energy.Order.ImpliedMarketIndicator\x12\x39\n\x08\x45xecInst\x18\n \x01(\x0e\x32\'.dbag.energy.Order.ExecutionInstruction\x12\x10\n\x08RefOrdID\x18\x0b \x01(\t\x12\n\n\x02Tm\x18\x63 \x01(\x04\x1a\xa1\x01\n\x10MDQuoteTypeValue\x12>\n\x05Value\x18\x01 \x01(\x0e\x32/.dbag.energy.Order.MDQuoteTypeValue.MDQuoteType\"M\n\x0bMDQuoteType\x12\x0e\n\nINDICATIVE\x10\x00\x12\x08\n\x04\x46IRM\x10\x05\x12\x0c\n\x08WITHHELD\x10\x06\x12\r\n\tREFERENCE\x10\x07\x12\x07\n\x03\x41LL\x10\x08\x1a\xcb\x01\n\x10TimeInForceValue\x12>\n\x05Value\x18\x01 \x01(\x0e\x32/.dbag.energy.Order.TimeInForceValue.TimeInForce\"w\n\x0bTimeInForce\x12\x07\n\x03\x44\x41Y\x10\x00\x12\x14\n\x10GOOD_TILL_CANCEL\x10\x01\x12\x10\n\x0c\x46ILL_OR_KILL\x10\x04\x12\x12\n\x0eGOOD_TILL_DATE\x10\x06\x12\x11\n\rFILL_AND_KILL\x10\r\x12\x10\n\x0cMARKET_ORDER\x10\x0e\"+\n\x0bMDEntryType\x12\x07\n\x03\x42ID\x10\x00\x12\t\n\x05OFFER\x10\x01\x12\x08\n\x04\x42OTH\x10\x02\"W\n\x16ImpliedMarketIndicator\x12\x0f\n\x0bNOT_IMPLIED\x10\x00\x12\n\n\x06NATIVE\x10\x05\x12\x0c\n\x08\x45XTERNAL\x10\x06\x12\x07\n\x03\x41LL\x10\x07\x12\t\n\x05VENUE\x10\x08\"?\n\x14\x45xecutionInstruction\x12\x16\n\x12STAY_ON_OFFER_SIDE\x10\x00\x12\x0f\n\x0b\x41LL_OR_NONE\x10\x01\"y\n\x05Trade\x12\n\n\x02ID\x18\x01 \x01(\x03\x12\r\n\x05TrdID\x18\x02 \x01(\t\x12\x31\n\x07UpdtAct\x18\x03 \x01(\x0b\x32 .dbag.energy.MDUpdateActionValue\x12\n\n\x02Px\x18\x04 \x01(\x01\x12\n\n\x02Sz\x18\x05 \x01(\x01\x12\n\n\x02Tm\x18\x63 \x01(\x04\"4\n\nSettlement\x12\n\n\x02ID\x18\x01 \x01(\x03\x12\x0e\n\x06SetlPx\x18\x02 \x01(\x01\x12\n\n\x02Tm\x18\x63 \x01(\x04\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'md_energy_pb2', globals())
@@ -21,31 +21,33 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _MARKETDATAREPORT._serialized_start=33
-  _MARKETDATAREPORT._serialized_end=198
-  _MARKETDATAREPORT_EVENT._serialized_start=116
-  _MARKETDATAREPORT_EVENT._serialized_end=198
-  _INSTRUMENT._serialized_start=201
-  _INSTRUMENT._serialized_end=447
-  _MDUPDATEACTIONVALUE._serialized_start=450
-  _MDUPDATEACTIONVALUE._serialized_end=597
-  _MDUPDATEACTIONVALUE_MDUPDATEACTION._serialized_start=537
-  _MDUPDATEACTIONVALUE_MDUPDATEACTION._serialized_end=597
-  _ORDER._serialized_start=600
-  _ORDER._serialized_end=1587
-  _ORDER_MDQUOTETYPEVALUE._serialized_start=1021
-  _ORDER_MDQUOTETYPEVALUE._serialized_end=1182
-  _ORDER_MDQUOTETYPEVALUE_MDQUOTETYPE._serialized_start=1105
-  _ORDER_MDQUOTETYPEVALUE_MDQUOTETYPE._serialized_end=1182
-  _ORDER_TIMEINFORCEVALUE._serialized_start=1185
-  _ORDER_TIMEINFORCEVALUE._serialized_end=1388
-  _ORDER_TIMEINFORCEVALUE_TIMEINFORCE._serialized_start=1269
-  _ORDER_TIMEINFORCEVALUE_TIMEINFORCE._serialized_end=1388
-  _ORDER_MDENTRYTYPE._serialized_start=1390
-  _ORDER_MDENTRYTYPE._serialized_end=1433
-  _ORDER_IMPLIEDMARKETINDICATOR._serialized_start=1435
-  _ORDER_IMPLIEDMARKETINDICATOR._serialized_end=1522
-  _ORDER_EXECUTIONINSTRUCTION._serialized_start=1524
-  _ORDER_EXECUTIONINSTRUCTION._serialized_end=1587
-  _TRADE._serialized_start=1589
-  _TRADE._serialized_end=1710
+  _MARKETDATAREPORT._serialized_end=228
+  _MARKETDATAREPORT_EVENT._serialized_start=130
+  _MARKETDATAREPORT_EVENT._serialized_end=228
+  _INSTRUMENT._serialized_start=231
+  _INSTRUMENT._serialized_end=477
+  _MDUPDATEACTIONVALUE._serialized_start=480
+  _MDUPDATEACTIONVALUE._serialized_end=627
+  _MDUPDATEACTIONVALUE_MDUPDATEACTION._serialized_start=567
+  _MDUPDATEACTIONVALUE_MDUPDATEACTION._serialized_end=627
+  _ORDER._serialized_start=630
+  _ORDER._serialized_end=1617
+  _ORDER_MDQUOTETYPEVALUE._serialized_start=1051
+  _ORDER_MDQUOTETYPEVALUE._serialized_end=1212
+  _ORDER_MDQUOTETYPEVALUE_MDQUOTETYPE._serialized_start=1135
+  _ORDER_MDQUOTETYPEVALUE_MDQUOTETYPE._serialized_end=1212
+  _ORDER_TIMEINFORCEVALUE._serialized_start=1215
+  _ORDER_TIMEINFORCEVALUE._serialized_end=1418
+  _ORDER_TIMEINFORCEVALUE_TIMEINFORCE._serialized_start=1299
+  _ORDER_TIMEINFORCEVALUE_TIMEINFORCE._serialized_end=1418
+  _ORDER_MDENTRYTYPE._serialized_start=1420
+  _ORDER_MDENTRYTYPE._serialized_end=1463
+  _ORDER_IMPLIEDMARKETINDICATOR._serialized_start=1465
+  _ORDER_IMPLIEDMARKETINDICATOR._serialized_end=1552
+  _ORDER_EXECUTIONINSTRUCTION._serialized_start=1554
+  _ORDER_EXECUTIONINSTRUCTION._serialized_end=1617
+  _TRADE._serialized_start=1619
+  _TRADE._serialized_end=1740
+  _SETTLEMENT._serialized_start=1742
+  _SETTLEMENT._serialized_end=1794
 # @@protoc_insertion_point(module_scope)
