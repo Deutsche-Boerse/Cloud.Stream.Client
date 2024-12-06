@@ -285,11 +285,15 @@ if __name__ == "__main__":
     username = args.username
     password = args.password
     subject = args.subject
+    startSeq = args.recover_by_seq_id
+    startTime = args.recover_by_timestamp
+    recover = f', "startSeq":{startSeq}' if startSeq is not None else f', "startTime":{startTime}' if startTime is not None else ""
+
     if subject != "":
         cmd = '{"event":"subscribe", "requestId":123456789, "subscribe":{"stream":['
         sep = ""
-        for s in subject:
-            cmd = f'{cmd}{sep}{{"stream": "{s}"}}'
+        for s in subject:        
+            cmd = f'{cmd}{sep}{{"stream": "{s}"{recover}}}'
             sep=", "
         cmd = f"{cmd}]}}}}"
         testsList.append((0,cmd))

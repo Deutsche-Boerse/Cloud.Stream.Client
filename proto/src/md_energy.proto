@@ -1,5 +1,5 @@
-// Date:    24.04.2024
-// Version: 001.000.007
+// Date:    14.11.2024
+// Version: 001.000.008
 
 syntax = "proto3";
 
@@ -12,10 +12,12 @@ message MarketDataReport
 		UNKNOWN_EVENT = 0;
 		START_OF_REFERENCE_DATA = 1;
 		END_OF_REFERENCE_DATA = 2;
+		FEED_RESET = 3;
 	}
 
 	Event					Evt				= 1;
 	int32					Cnt				= 2;	// total message count of the current reference data cycle
+	string					Base			= 3;	// FIX 41251 - StreamCommodityBase
 }
 
 message Instrument
