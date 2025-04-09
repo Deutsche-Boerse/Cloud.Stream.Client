@@ -302,30 +302,6 @@ if __name__ == "__main__":
             server, username, args.msgFormat, subject
         )
     )
-    # If no token is provided: Collect from username and password and persist it
-    if not args.token:
-        data = {
-            "username": username,
-            "password": password,
-        }
-        data = json.dumps(data).encode()
-
-        logging.info(
-            "Authenticate using username and password at server {}".format(server)
-        )
-        req = requests.post(
-            "https://" + server + "/login",
-            data=data,
-            headers={"Content-Type": "application/json"},
-        )
-        if req.status_code >= 400:
-            invalid_request_reason = req.text
-            logging.info(f"failed because: {invalid_request_reason}")
-        args.token = req.json()["AccessToken"]
-
-        # Cleanup sensitive data
-        del data
-        del req
 
     # Validate that we can extract header information from JWT-Token
     #headers = verifyToken(args.token)
