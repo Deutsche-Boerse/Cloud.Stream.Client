@@ -331,8 +331,8 @@ if __name__ == "__main__":
     #headers = verifyToken(args.token)
     #logging.info("Successfully extracted headers from JWT Token: {}".format(headers))
 
-    url_header = {"Authorization": "Bearer " + args.token}
-    ws_url = "wss://" + server + "/stream?format=" + args.msgFormat
+    url_header = [("X-API-Key", args.token)]
+    ws_url = "wss://" + server + "/stream"
     qq = Queue()
     makeQueueProc(qq)
     asyncio.run(start(qq))
