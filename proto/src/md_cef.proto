@@ -1,5 +1,5 @@
-// Date:    07.10.2023
-// Version: 001.000.006
+// Date:    10.01.2025
+// Version: 001.000.009
 
 syntax = "proto3";
 
@@ -60,6 +60,7 @@ message Instrument
 		SR = 15;				// Subscription Rights
 		WAR = 16;				// Warrant
 		ETF = 17;				// Exchange Traded Fund
+		FXSWAP = 18;			// FX Swap
 		OTHER = 99;				// Other
 	}
 
@@ -144,6 +145,7 @@ message Instrument
 	ExerciseStyleValue		ExerStyle		= 19;	// FIX 1194 - ExerStyle
 
 	Decimal					MinPxIncr		= 21;	// FIX 969 - MinPriceIncrement
+	string					TenorVal		= 22;	// FIX 6215 - TenorValue
 
 	SecurityUpdateActionValue	UpdActn		= 30;	// FIX 980 - SecurityUpdateAction
 	uint64					LastUpdateTm	= 31;	// FIX 779 - LastUpdateTime
@@ -162,6 +164,15 @@ message QuoteSide
 		MDQuoteType			Value			= 1;
 	}
 
+	message QuoteConditionValue {
+		enum QuoteCondition {	// FIX 276
+			FIRM = 0;
+			INDICATIVE = 1;
+		}
+
+		QuoteCondition		Value			= 1;
+	}
+
 	message MDEntryTypeValue {
 		enum MDEntryType		// FIX 269
 		{
@@ -174,11 +185,25 @@ message QuoteSide
 		MDEntryType			Value			= 1;
 	}
 
+	message HolidayWarnValue {
+		enum HolidayWarn {	// FIX 5679 (360T)
+			NO_HOLIDAYS = 0;
+			HOLIDAYS = 1;
+		}
+
+		HolidayWarn			Value			= 1;
+	}
+
+
 	Decimal					Px				= 1;	// FIX 270 - MDEntryPrice
 	Decimal					Sz				= 2;	// FIX 271 - MDEntrySize
 	google.protobuf.Int32Value	NumOfOrds	= 3;	// FIX 346 - NumberOfOrders
 	MDQuoteTypeValue		MDQteTyp		= 4;	// FIX 1070 - MDQuoteType
 	MDEntryTypeValue		Typ				= 5;	// FIX 269 - MDEntryType
+	QuoteConditionValue		QCond			= 6;	// FIX 276 - QuoteCondition
+	Decimal					FwdPnts			= 7;	// FIX 5675 (360T) - ForwardPoints
+	int64					Pip				= 8;	// FIX 5678 (360T) - Pip
+	HolidayWarnValue		HlWrn			= 9;	// FIX 5679 (360T) - HolidayWarn
 }
 
 message Data
@@ -362,6 +387,8 @@ message Data
 			PERCENTAGE = 1;
 			PER_UNIT = 2;
 			YIELD = 9;
+			PRICE_SPREAD = 12;
+			NORMAL_RATE = 20;
 			BASIS_POINT = 22;
 		}
 
@@ -393,12 +420,14 @@ message Data
 			AUCTION_CLEARING_PRICE = 5;					// FIX 'Q'
 			PREVIOUS_CLOSING_PRICE = 6;					// FIX 'e'
 			PRIOR_SETTLEMENT_PRICE = 7;					// FIX 'M'
+			MID_PRICE = 8;								// FIX 'H'
 		}
 
 		MDEntryType				Typ				= 1;	// FIX 269 - MDEntryType
 		Decimal					Px				= 2;	// FIX 270 - MDEntryPrice
 		Decimal					Sz				= 3;	// FIX 271 - MDEntrySize
 		uint64					Tm				= 4;	// FIX 273 - MDEntryTime
+		PriceTypeValue			PxTyp			= 5;	// FIX 423 - PriceType
 	}
 
 
@@ -439,6 +468,7 @@ message Data
 	Decimal						Int				= 52;	// FIX 270 FIX 269@C - MDEntryPx + MDEntryType=C (Open Interest)
 	Decimal						SettlCurrAmt	= 53;	// FIX 119 - Settlement Currency Amount / Nominal Amount
 	string						SettlCcy		= 54;	// FIX 120 - Settlement Currency
+	string						SettlDt			= 55;	// FIX 64 - SettlementDate
 
 	// Statistics & Others
 	Decimal						PaPx			= 61;	// FIX - Potential Auction Price
