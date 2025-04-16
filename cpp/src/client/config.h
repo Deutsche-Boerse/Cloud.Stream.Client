@@ -7,13 +7,10 @@
 
 struct configuration {
 	// Connection
-	inline static std::string s_loginServer = "";
 	inline static std::string s_wsServer    = "";
 	inline static int         s_wsPort      = 443;
 
 	// Authentication
-	inline static std::string s_username = "";
-	inline static std::string s_password = "";
 	inline static std::string s_token    = "";
 
 	// Data
@@ -26,9 +23,7 @@ struct configuration {
 	inline friend std::ostream &operator<<(std::ostream &ss, const configuration &) {
 		// clang-format off
 		ss << R"({"ws_address":")" << s_wsServer << ':' << s_wsPort
-		   << R"(", login_address":")" << s_loginServer
-		   << R"(", "Username": ")" << s_username
-		   << R"(", "Token/Password": "surpressed)"
+		   << R"(", "Token": "surpressed)"
 		   << R"(", "topics": [)";
 		for (const auto &topic : s_topics) {
 			ss << '"' << topic << '"';

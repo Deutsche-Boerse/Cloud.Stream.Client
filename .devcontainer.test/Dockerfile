@@ -52,9 +52,9 @@ RUN curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v21.1
     make -j 16 install && make clean || exit 1
 
 # Install IXWebSocket for mdstream-client-cpp
-RUN curl -LO https://github.com/machinezone/IXWebSocket/archive/refs/tags/v11.4.3.tar.gz    && \
-    tar -xf v11.4.3.tar.gz                                                                  && \
-    cd IXWebSocket-11.4.3                                                                   && \
+RUN curl -LO https://github.com/machinezone/IXWebSocket/archive/refs/tags/v11.4.5.tar.gz    && \
+    tar -xf v11.4.5.tar.gz                                                                  && \
+    cd IXWebSocket-11.4.5                                                                   && \
     mkdir -p build && cd build                                                              && \
     cmake ..                                                                                   \
         -DUSE_TLS=ON                                                                           \
