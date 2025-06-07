@@ -33,7 +33,7 @@ Export the password as STREAMUSER and STREAMPASS environment variables
 Clone the repo and go to the root folder of the repo to run the command to start the python client and subscribe to your desired subject.
 For example:
 
-```myuser:~/Cloud.Stream.Client$ python3 python/src/client/client.py --websocket-server md.deutsche-boerse.com --subject md-tradegate --username $STREAMUSER --password $STREAMPASS --msgFormat json```
+```myuser:~/Cloud.Stream.Client$ python3 python/src/client/client.py --websocket-server md.deutsche-boerse.com --subject md-tradegate --token $API_KEY --msgFormat json```
 
 The messages are logged by default into streamclient.log
 The message format is proto by default, the above example uses json but proto is recommended.
