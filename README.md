@@ -28,7 +28,7 @@ Second we need to install the modules required
 
 ```myuser:~/Cloud.Stream.Client$ pip3 install --user -r python/requirements.txt```
 
-Export the password as STREAMUSER and STREAMPASS environment variables
+Export your api-key generated in the GUI as API_KEY environment variable
 
 Clone the repo and go to the root folder of the repo to run the command to start the python client and subscribe to your desired subject.
 For example:
