@@ -13,7 +13,6 @@ static inline int parse_int(const char *s, int *var);
 namespace {
 // parameters
 enum cfg_params {
-	CFG_LOGIN_SERVER,
 	CFG_WEBSOCKET_SERVER,
 	CFG_USERNAME,
 	CFG_PASSWORD,
@@ -26,7 +25,6 @@ enum cfg_params {
 };
 
 static struct option options[] = {
-	{ "login-server",          required_argument, 0, CFG_LOGIN_SERVER           },
 	{ "websocket-server",      required_argument, 0, CFG_WEBSOCKET_SERVER       },
 	{ "username",              required_argument, 0, CFG_USERNAME               },
 	{ "password",              required_argument, 0, CFG_PASSWORD               },
@@ -43,11 +41,8 @@ inline void usage(char *proc) {
 	    stdout,
 	    "Usage:\n %s\n"
 	    " where:\n"
-	    "  [--login-server          <loginserver>]    # (optional) defaults to value of wsserver\n"
 	    "  [--websocket-server      <wsserver>]       # (required) defaults to \"\"\n"
-	    "  [--username              <username>]       # (optional) defaults to \"\"\n"
-	    "  [--password              <password>]       # (optional) defaults to \"\"\n"
-	    "  [--token                 <token>]          # (optional) WS Auth token, defaults to \"\"\n"
+	    "  [--token                 <token>]          # (mandatory) user X-API-Key\n"
 	    "  [--subject               <subject>]        # (required once) subjects to request.  Can occur \n"
 	    "                                             #            multiple times\n"
 	    "  [--log-file              <filepath>]       # (optional) Write messages to specified file.\n"
@@ -66,17 +61,8 @@ int config_parse(struct configuration *c, int argc, char *argv[]) {
 
 	while ((ret = getopt_long(argc, argv, "", options, NULL)) != -1) {
 		switch (ret) {
-		case CFG_LOGIN_SERVER:
-			configuration::s_loginServer = optarg;
-			break;
         case CFG_WEBSOCKET_SERVER:
 			configuration::s_wsServer = optarg;
-			break;
-		case CFG_USERNAME:
-			configuration::s_username = optarg;
-			break;
-		case CFG_PASSWORD:
-			configuration::s_password = optarg;
 			break;
 		case CFG_TOKEN:
 			configuration::s_token = optarg;
@@ -120,13 +106,6 @@ int config_parse(struct configuration *c, int argc, char *argv[]) {
 		Log::info("Websocket server: wss://%s:%i/stream", configuration::s_wsServer.c_str(), configuration::s_wsPort);
 	}
 
-	if (configuration::s_loginServer.empty()) {
-		Log::info("Login Server empty.  Using Websocket server address.");
-		configuration::s_loginServer = configuration::s_wsServer;
-	} else {
-		Log::info("Login server: https://%s/login", configuration::s_loginServer.c_str());
-	}
-
 	if (configuration::s_topics.empty()) {
 		Log::error("No topic selected.  Stop!");
 		return -1;
@@ -135,17 +114,9 @@ int config_parse(struct configuration *c, int argc, char *argv[]) {
 	}
 
 	if (configuration::s_token.empty()) {
-		if (configuration::s_username.empty()) {
-			Log::info("Username not set.  Please enter username:");
-			std::cin >> configuration::s_username;
-		}
-		Log::info("Username: %s", configuration::s_username.c_str());
-		if (configuration::s_password.empty()) {
-			Log::info("Password not set.  Please enter password:");
-			get_password(configuration::s_password);
-		}
+		Log::error("No token provided.  Stop!");
+		return -1;
 	}
-
 
 	if (configuration::s_rec_seq_id != 0) {
 		Log::info("Recovering data from sequence ID %zu", configuration::s_rec_seq_id);

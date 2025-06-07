@@ -6,7 +6,6 @@
 
 #include <nlohmann/json.hpp>
 #include <utils/log.h>
-#include <utils/exec.h>
 
 #include <exception>
 #include <iostream>
@@ -17,13 +16,7 @@ using namespace std::literals::chrono_literals;
 
 WebInterface::WebInterface() {
 	if (configuration::s_token.empty()) {
-		Log::info("Token empty, try to obtain one using username and password");
-		get_token();
-	}
-	if (configuration::s_token.empty()) {
-		Log::error("Could not obtain token.  Stop!");
-	} else {
-		Log::info("Successfully obtained token.");
+		Log::error("Token empty. Please povide an X-API-Key");
 	}
 
 	if (!configuration::s_logFileName.empty()) {
@@ -40,7 +33,7 @@ void WebInterface::run() {
 	    "wss://" + configuration::s_wsServer + "/stream?format=proto";
 	m_ws.setUrl(url);
 	ix::WebSocketHttpHeaders headers;
-	headers["Authorization"] = std::string{"Bearer "} + configuration::s_token;
+	headers["X-API-Key"] = configuration::s_token;
 	m_ws.setExtraHeaders(headers);
 
 	Log::info("Connecting to %s ...", url.c_str());
@@ -78,24 +71,6 @@ void WebInterface::run() {
 
 	// Now that our callback is setup, we can start receive messages
 	m_ws.run();
-}
-
-
-void WebInterface::get_token() const {
-	Log::info("Obtain token from https://%s/login", configuration::s_wsServer.c_str());
-	const auto cmd = R"(curl -k -w "\n" -X POST https://)" + configuration::s_loginServer +
-	                 R"(/login -H "Content-Type: application/json" -d '{"username":")" +
-	                 configuration::s_username + R"(", "password":")" + configuration::s_password + R"("}')";
-	std::string reply;
-	reply = OSCommandExecuter::execute(cmd);
-
-	try {
-		auto r       = nlohmann::json::parse(reply);
-		configuration::s_token = r["AccessToken"];
-	} catch (...) {
-		Log::error("Failed to obtain token: %s", reply.c_str());
-		std::throw_with_nested(std::runtime_error("Login failed.  Stop!"));
-	}
 }
 
 std::string WebInterface::build_subscribe_message() const {
