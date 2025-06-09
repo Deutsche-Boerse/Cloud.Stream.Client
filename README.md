@@ -150,13 +150,13 @@ make mdstream-client-python
 Here's an example how to run `mdstream-client-cpp`
 ```
 ./build/cpp/mdstream-client-cpp --websocket-server [CLOUD_STREAM_SERVER]  \
-    --subject [STREAM] --username [USER] --password [PASSOWRD]
+    --subject [STREAM] --username [USER] --password [PASSOWRD] 
 ```
 
 Here's an example how to run `mdstream-client-python`
 ```
 python3 ./build/python/client.py --websocket-server [CLOUD_STREAM_SERVER] \   
-    --subject [STREAM] --username [USER] --password [PASSWORD]
+    --subject [STREAM] --token [API_KEY]
 ```
 
 ### List of Parameters
