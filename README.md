@@ -164,11 +164,9 @@ python3 ./build/python/client.py --websocket-server [CLOUD_STREAM_SERVER] \
 | ------------------------ | ------------- | ------------------------------------------------------ |
 | `--login-server`         | String (URL)  | login server URL to get jwt authentication key         |
 | `--websocket-server`     | String (URL)  | WebSocket address of Cloud Stream interface            |
-| `--username`             | String        | Username                                               |
-| `--password`             | String        | Password                                               |
 | `--token`                | String        | Authentication token                                   |
 | `--subject`              | String        | Requested subjects. Multiple subjects can be selected. |
-| `--log-file`          | String (Path) | Write messages to specified file or stdout if no file is given |
+| `--log-file`             | String (Path) | Write messages to specified file or stdout if no file is given |
 | `--recover-by-seq-id`    | Integer       | Recover message starting from ID                       |
 | `--recover-by-timestamp` | Integer       | Recover message from timestamp in nanosecond           |
 | `--msgFormat`            | String        | proto or json as message format delivered to client    |
