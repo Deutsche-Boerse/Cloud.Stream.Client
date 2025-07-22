@@ -310,16 +310,23 @@ async def msgStat():
         payload_rate = stats['total_payload_bytes'] - total_payload_prev
         
         # Calculate compression ratios
-        payload_ratio = payload_rate / uncompressed_rate if uncompressed_rate > 0 else 0
-        compression_savings = (1 - payload_ratio) * 100 if payload_ratio > 0 else 0
+        if args.compressionLevel == 0:
+            # When compression is disabled, payload should equal uncompressed data
+            payload_ratio = 1.0
+            compression_savings = 0.0
+        else:
+            payload_ratio = payload_rate / uncompressed_rate if uncompressed_rate > 0 else 0
+            compression_savings = (1 - payload_ratio) * 100 if payload_ratio > 0 else 0
         
         # Log comprehensive statistics
+        compression_status = "DISABLED" if args.compressionLevel == 0 else "ENABLED"
         logging.info(
             f"Rate: {msgs_rate:4} msgs/s | "
             f"Uncompressed: {uncompressed_rate:6} B/s | "
             f"Payload: {payload_rate:6} B/s | "
             f"Network: {network_rate:6} B/s | "
-            f"Compression: {compression_savings:5.1f}% saved | "
+            f"Compression: {compression_status} | "
+            f"Savings: {compression_savings:5.1f}% | "
             f"Ratio: {payload_ratio:.3f}"
         )
         
@@ -449,7 +456,7 @@ async def start(qq):
             proxy=https_proxy,
             heartbeat=30,
             params={"format": args.msgFormat, "compressionLevel":args.compressionLevel,},
-            compress=int(args.compressionLevel),  # Force WebSocket compression with deflate level 
+            compress=None if args.compressionLevel == 0 else int(args.compressionLevel),  # Disable compression if level 0
         ) as ws:
             logging.info(
                 "successful connected {} to {}!".format(
@@ -458,7 +465,8 @@ async def start(qq):
             )
             
             # Check if compression was negotiated
-            logging.info(f"WebSocket client compression requested: compress={args.compressionLevel}")
+            compression_status = "DISABLED" if args.compressionLevel == 0 else f"LEVEL {args.compressionLevel}"
+            logging.info(f"WebSocket client compression: {compression_status}")
             logging.info(f"Server compressionLevel parameter: {args.compressionLevel}")
             logging.info(f"Message format: {args.msgFormat}")
             
@@ -469,7 +477,10 @@ async def start(qq):
                                      if 'compress' in k.lower() or 'deflate' in k.lower() or 'extension' in k.lower()}
                 logging.info(f"WebSocket response headers (compression related): {compression_headers}")
             
-            logging.info("Watch for RSV1=True in frame logs - that indicates compression is active")
+            if args.compressionLevel == 0:
+                logging.info("Compression DISABLED - RSV1 should be False in all frames")
+            else:
+                logging.info("Compression ENABLED - watch for RSV1=True in compressed frames")
             mainTask = asyncio.create_task(doTasks(ws, qq))
             await mainTask
             
