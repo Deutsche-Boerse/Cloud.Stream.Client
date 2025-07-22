@@ -166,6 +166,10 @@ n_messages_prev = 0
 # Global variable: compression tracking
 total_uncompressed_bytes = 0
 
+# Global variable: message size tracking
+total_message_sum = 0
+total_message_count = 0
+
 # Global variable: monitoring connector
 monitoring_connector = None
 
@@ -283,6 +287,7 @@ async def msgStat():
     Print messages-per-second and compression statistics every second
     """
     global n_messages, n_messages_prev, shutdownNow, total_uncompressed_bytes, monitoring_connector
+    global total_message_sum, total_message_count
     
     # Tracking previous values for calculating rates
     total_uncompressed_prev = 0
@@ -309,6 +314,15 @@ async def msgStat():
         network_rate = stats['total_bytes_received'] - total_network_prev
         payload_rate = stats['total_payload_bytes'] - total_payload_prev
         
+        # Calculate average message size using total sum and count
+        avg_msg_size = total_message_sum / total_message_count if total_message_count > 0 else 0
+        
+        # Format the average with detailed breakdown in parentheses
+        if total_message_count > 0:
+            avg_msg_display = f"{avg_msg_size:.0f} B ({total_message_sum}/{total_message_count})"
+        else:
+            avg_msg_display = "0 B (0/0)"
+        
         # Calculate compression ratios
         if args.compressionLevel == 0:
             # When compression is disabled, payload should equal uncompressed data
@@ -322,6 +336,7 @@ async def msgStat():
         compression_status = "DISABLED" if args.compressionLevel == 0 else "ENABLED"
         logging.info(
             f"Rate: {msgs_rate:4} msgs/s | "
+            f"Avg Size: {avg_msg_display} | "
             f"Uncompressed: {uncompressed_rate:6} B/s | "
             f"Payload: {payload_rate:6} B/s | "
             f"Network: {network_rate:6} B/s | "
@@ -336,6 +351,10 @@ async def msgStat():
         total_network_prev = stats['total_bytes_received']
         total_payload_prev = stats['total_payload_bytes']
         
+        # Reset per-second message tracking
+        total_message_sum = 0
+        total_message_count = 0
+        
         # sleep to hit "second mark .000"
         t1 = datetime.datetime.now()
         tms = (1000000 - t1.microsecond) / 1000
@@ -348,12 +367,14 @@ async def on_message_to_queue(message, qq):
     """
     Receiving a websocket message and put it to queue, also tracking uncompressed message size.
     """
-    global total_uncompressed_bytes
+    global total_uncompressed_bytes, total_message_sum, total_message_count
     
     # Track uncompressed message size
     if hasattr(message, 'data') and message.data:
         uncompressed_size = len(message.data)
         total_uncompressed_bytes += uncompressed_size
+        total_message_sum += uncompressed_size
+        total_message_count += 1
     
     qq.put(message)
     global n_messages
