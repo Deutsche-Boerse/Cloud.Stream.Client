@@ -43,6 +43,8 @@ class argParser:
         self.parser.add_argument("--recover-by-timestamp")
 
         self.parser.add_argument("--msgFormat", default="proto")
+        self.parser.add_argument("--testfile", default="")
+        self.parser.add_argument("--compressionLevel", default=0, type=int)
 
         self.args = self.parser.parse_args()
 
