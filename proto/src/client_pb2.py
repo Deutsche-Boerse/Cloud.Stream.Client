@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63lient.proto\x12\x06\x43lient\x1a\x19google/protobuf/any.proto\"t\n\tSubscribe\x12(\n\x06stream\x18\x01 \x03(\x0b\x32\x18.Client.Subscribe.Stream\x1a=\n\x06Stream\x12\x0e\n\x06stream\x18\x01 \x01(\t\x12\x11\n\tstartTime\x18\x02 \x01(\x03\x12\x10\n\x08startSeq\x18\x03 \x01(\x04\"\x1d\n\x0bUnsubscribe\x12\x0e\n\x06stream\x18\x01 \x03(\t\"{\n\x07Request\x12\r\n\x05\x65vent\x18\x01 \x01(\t\x12\x11\n\trequestId\x18\x02 \x01(\x03\x12$\n\tsubscribe\x18\x03 \x01(\x0b\x32\x11.Client.Subscribe\x12(\n\x0bunsubscribe\x18\x04 \x01(\x0b\x32\x13.Client.Unsubscribe\"=\n\x08Response\x12\x11\n\trequestId\x18\x01 \x01(\x03\x12\x1e\n\x06status\x18\x02 \x01(\x0e\x32\x0e.Client.Status\"R\n\rStreamMessage\x12\x0c\n\x04subs\x18\x01 \x01(\t\x12\x0b\n\x03seq\x18\x02 \x01(\x04\x12&\n\x08messages\x18\x03 \x03(\x0b\x32\x14.google.protobuf.Any*G\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x10\n\x0cSERVER_ERROR\x10\x01\x12\x11\n\rACCESS_DENIED\x10\x02\x12\x10\n\x0cNOT_ENTITLED\x10\x03\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63lient.proto\x12\x06\x43lient\x1a\x19google/protobuf/any.proto\"t\n\tSubscribe\x12(\n\x06stream\x18\x01 \x03(\x0b\x32\x18.Client.Subscribe.Stream\x1a=\n\x06Stream\x12\x0e\n\x06stream\x18\x01 \x01(\t\x12\x11\n\tstartTime\x18\x02 \x01(\x03\x12\x10\n\x08startSeq\x18\x03 \x01(\x04\"\x1d\n\x0bUnsubscribe\x12\x0e\n\x06stream\x18\x01 \x03(\t\"{\n\x07Request\x12\r\n\x05\x65vent\x18\x01 \x01(\t\x12\x11\n\trequestId\x18\x02 \x01(\x03\x12$\n\tsubscribe\x18\x03 \x01(\x0b\x32\x11.Client.Subscribe\x12(\n\x0bunsubscribe\x18\x04 \x01(\x0b\x32\x13.Client.Unsubscribe\"=\n\x08Response\x12\x11\n\trequestId\x18\x01 \x01(\x03\x12\x1e\n\x06status\x18\x02 \x01(\x0e\x32\x0e.Client.Status\"R\n\rStreamMessage\x12\x0c\n\x04subs\x18\x01 \x01(\t\x12\x0b\n\x03seq\x18\x02 \x01(\x04\x12&\n\x08messages\x18\x03 \x03(\x0b\x32\x14.google.protobuf.Any*Y\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x10\n\x0cSERVER_ERROR\x10\x01\x12\x11\n\rACCESS_DENIED\x10\x02\x12\x10\n\x0cNOT_ENTITLED\x10\x03\x12\x10\n\x0cLIMIT_STREAM\x10\x04\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,7 +23,7 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'client_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _globals['_STATUS']._serialized_start=472
-  _globals['_STATUS']._serialized_end=543
+  _globals['_STATUS']._serialized_end=561
   _globals['_SUBSCRIBE']._serialized_start=51
   _globals['_SUBSCRIBE']._serialized_end=167
   _globals['_SUBSCRIBE_STREAM']._serialized_start=106
