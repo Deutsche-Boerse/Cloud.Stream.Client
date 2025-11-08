@@ -1,8 +1,7 @@
-// Date:    07.10.2023
-// Version: 001.000.006
+// Date:    15.10.2025
+// Version: 001.000.007
 
 syntax = "proto3";
-
 import "google/protobuf/any.proto";
 
 package Client;
@@ -39,6 +38,7 @@ enum Status {
 	SERVER_ERROR = 1;
 	ACCESS_DENIED = 2;
 	NOT_ENTITLED = 3;
+	LIMIT_STREAM = 4;
 }
 
 //one Response for each stream in Request
