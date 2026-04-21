@@ -1,5 +1,5 @@
-// Date:    15.10.2025
-// Version: 001.000.010
+// Date:    21.04.2026
+// Version: 001.000.011
 
 syntax = "proto3";
 
@@ -321,7 +321,6 @@ message Data
 			BLOCKTRADE = 1;
 			EFP = 2;
 			EXCHANGEFORSWAP = 12;
-			PORTFOLIOCOMPRESSIONTRADE = 50;
 			OTC = 54;
 			EXCHANGEBASISFACILITY = 55;
 			VOLATRADE = 1000;
@@ -330,7 +329,6 @@ message Data
 			BLOCKTRADEATMARKET = 1004;
 			XETRAEUREXENLIGHTTRIGGEREDTRADE = 1006;
 			BLOCKQTPIPTRADE = 1007;
-			DELTATRADEATMARKET = 1017;
 			OPENINGAUCTIONTRADE = 1100;
 			INTRADAYAUCTIONTRADE = 1101;
 			VOLATILITYAUCTIONTRADE = 1102;
@@ -383,6 +381,7 @@ message Data
 		k = 11;		// FIX Out of Sequence
 		a = 12;		// FIX Volume Only
 		XR = 13;		// Retail 
+		DA = 14; 		// Auction Volume Discovery
 	}
 
 	message PriceTypeValue
