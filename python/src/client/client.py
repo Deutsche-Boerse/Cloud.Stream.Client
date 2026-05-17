@@ -278,6 +278,7 @@ def log_message(message, flog):
             if args.msgFormat == "proto":
                 flog.write((l).to_bytes(4, byteorder="big", signed=False))
             flog.write(message.data)
+            flog.flush()
         else:
             logging.info("got 0 bytes message")
 
