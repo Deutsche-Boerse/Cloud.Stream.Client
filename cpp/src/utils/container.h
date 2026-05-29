@@ -1,20 +1,19 @@
 #pragma once
 
-#include <array>
-#include <deque>
-#include <list>
-#include <vector>
-
 #include <sstream>
+#include <string>
 
 namespace Container {
     template<typename cont_T>
     std::string print_container(const cont_T &cont, const std::string &delim = ",") {
-        std::stringstream res;
-        for (const auto &elem: cont) {
-            res << elem;
-            if (elem != cont.back()) res << delim;
-        }
-        return res.str();
+        std::ostringstream r;
+        auto i = cont.begin();
+        auto e = cont.end();
+        if (i == e)
+            return r.str();
+        r << *i++;
+        for ( ; i != e; ++i)
+            r << delim << *i;
+        return r.str();
     }
 }
