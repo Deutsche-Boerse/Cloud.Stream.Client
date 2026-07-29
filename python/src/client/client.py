@@ -181,7 +181,7 @@ shutdownNow = False
 args: dict
 
 
-def queuereader_proc(queue):
+def queuereader_proc(queue, args):
     """
     Collect messages passed via the queue into a file 
     """
@@ -201,7 +201,7 @@ def queuereader_proc(queue):
         if msg == "stop":
             logging.info("queuereader_proc got stop")
         else:
-            log_message(msg, fLogMsg)
+            log_message(msg, fLogMsg, args)
     if fLogMsg:
         fLogMsg.close()
 
@@ -263,7 +263,7 @@ async def sendBytesAfterTimeout(message, to, ws, qq):
         logging.critical("cannot parse command:{}".format(message), exc_info=True)
 
 
-def log_message(message, flog):
+def log_message(message, flog, args):
     """
     Log data of received message. Format is length(4 bytes) + message
     """
@@ -278,10 +278,10 @@ def log_message(message, flog):
             if args.msgFormat == "proto":
                 flog.write((l).to_bytes(4, byteorder="big", signed=False))
             flog.write(message.data)
-            flog.flush()
         else:
             logging.info("got 0 bytes message")
 
+    flog.flush()
 
 async def msgStat():
     """
@@ -416,7 +416,7 @@ def makeQueueProc(qq):
     We can receive from websocket as fast as possible by disconnecting
     """
     global reader_p
-    reader_p = Process(target=queuereader_proc, args=((qq),))
+    reader_p = Process(target=queuereader_proc, args=((qq),args,))
     reader_p.daemon = True
     reader_p.start()  # Launch reader_p() as another proc
 
