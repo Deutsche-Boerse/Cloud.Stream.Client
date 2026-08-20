@@ -3,7 +3,7 @@
 # protobuf variables 
 PROTO_DIR     := proto
 PROTOC        := protoc
-PROTO_FILES   ?= client.proto md_cef.proto md_crypto.proto md_energy.proto
+PROTO_FILES   ?= client.proto md_cef.proto md_crypto.proto md_energy.proto md_eex_analytics.proto md_eex_auctions.proto md_eex_derivatives.proto md_eex_spot.proto md_tpe.proto
 PROTO_SRC_DIR := src
 PROTO_CPP_OUT := build/proto/cpp
 PROTO_PY_OUT  := build/proto/python

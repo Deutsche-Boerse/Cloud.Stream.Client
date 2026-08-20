@@ -1,0 +1,113 @@
+// Date:    10.02.2026
+// Version: 001.000.008
+
+syntax = "proto3";
+
+option go_package = "dev/ccs-service/dbag/gen/eex.spot";
+
+package eex.spot;
+
+message Identification
+{
+	string						Cmdty			= 1;
+	string						Area			= 2;
+	string						ShortCode		= 3;
+	string						LongName		= 4;
+	string						DeliveryDay		= 5;
+	string						UOM				= 6;
+	string						Currency		= 7;
+	string						TrdDate			= 8;
+	double						ContractVol		= 9;
+	int64						Start			= 10;
+	int64						End				= 11;
+	int32						DeliveryHours	= 12;
+}
+
+message ReferenceData
+{
+	message ProductTypeValue
+	{
+		enum ProductType
+		{
+			UNKNOWN_PRODUCT_TYPE = 0;
+			DAY = 1;
+			HOURLY = 2;
+			WEEKDAY = 3;
+			WEEKEND = 4;
+			DAYAHEAD = 5;
+			SATURDAY = 6;
+			SUNDAY = 7;
+			BUSINESSHOLIDAY = 8;
+		}
+
+		ProductType				Value			= 1;
+	}
+
+	Identification				ID				= 1;
+
+	ProductTypeValue			Product			= 2;
+	int64						StartTm			= 3;
+	int64						EndTm			= 4;
+
+	int64						Tm				= 99;
+}
+
+message Trade
+{
+	enum UpdateAction
+	{
+		UNKNOWN_UPDATE_ACTION = 0;
+		NEW = 1;
+		UPDATE = 2;
+		DELETE = 3;
+	}
+
+	message AggressorSideValue
+	{
+		enum AggressorSide
+		{
+			UNKNOWN_AGGRESSOR_SIDE = 0;
+			SELL = 1;
+			BUY = 2;
+		}
+
+		AggressorSide			Value			= 1;
+	}
+
+	Identification				ID				= 1;
+
+	UpdateAction				UpdtAct			= 2;
+	string						TrdID			= 3;
+	int32						TrdVersion		= 4;
+	string						RelationshipID	= 5;
+	string						GroupID			= 6;
+	AggressorSideValue			AgrsrAct		= 7;
+	bool						FromBrokenSpread= 8;
+	double						Px				= 9;
+	double						Sz				= 10;
+	double						TrdVol			= 11;
+
+	int64						Tm				= 99;
+}
+
+message Settlement
+{
+	Identification				ID				= 1;
+
+	double						Px				= 2;
+
+	int64						Tm				= 99;
+	//string						UpdtAct			= 14;
+}
+
+message TopOfBook
+{
+	Identification				ID				= 1;
+
+	double						BidPx			= 2;
+	double						BidSz			= 3;
+	double						AskPx			= 4;
+	double						AskSz			= 5;
+
+	int64						Tm				= 99;
+}

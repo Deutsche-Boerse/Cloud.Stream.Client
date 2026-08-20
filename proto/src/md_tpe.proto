@@ -1,0 +1,119 @@
+// Date:    10.02.2026
+// Version: 001.000.008
+
+syntax = "proto3";
+
+option go_package = "dev/ccs-service/dbag/gen/eex.transparency";
+
+package eex.transparency;
+
+message AdHoc
+{
+	string						area			= 1;
+	string						commodity		= 2;
+	string						companyID		= 3;
+	string						companyName		= 4;
+	string						messageID		= 5;
+	string						eventStatus		= 6;
+	string						adHocType		= 7;
+	int64						eventStart		= 8;
+	int64						eventStop		= 9;
+	string						remarks			= 10;
+	int64						reported		= 11;
+	int64						modified		= 12;
+	int64						published		= 13;
+	string						ace				= 14;
+	string						eventID			= 15;
+	int64						eventVersion	= 16;
+}
+
+
+message Event
+{
+	message ShareholderType {
+		string					name			= 1;
+		string					ace				= 2;
+		double					share			= 3;
+	}
+
+	message CapacityIntervalType {
+		double					availableCapacity	= 1;
+		double					nonAvailableCapacity= 2;
+		int64					validFrom		= 3;
+		int64					validTo			= 4;
+	}
+
+	string						area			= 1;
+	string						commodity		= 2;
+	string						companyID		= 3;
+	string						companyName		= 4;
+	string						companyCountry	= 5;
+	string						messageID		= 6;
+	string						ace				= 7;
+	string						facilityID		= 8;
+	string						facilityName	= 9;
+	string						biddingZone		= 10;
+	string						balancingZone	= 11;
+	string						unitID			= 12;
+	string						unitName		= 13;
+	string						controlArea		= 14;
+	string						marketArea		= 15;
+	string						fuelType		= 16;
+	string						facilityType	= 17;
+	string						eic				= 18;
+	repeated ShareholderType	shareholder		= 19;
+	string						eventStatus		= 20;
+	string						eventType		= 21;
+	string						unavailabilityType	= 22;
+	int64						eventStart		= 23;
+	int64						eventStop		= 24;
+	string						capacityKind	= 25;
+	repeated CapacityIntervalType	capacityInterval= 26;
+	string						unitMeasure		= 27;
+	double						installedCapacity	= 28;
+	string						unavailabilityReason= 29;
+	string						remarks			= 30;
+	string						direction		= 31;
+	int64						reported		= 32;
+	int64						modified		= 33;
+	int64						published		= 34;
+	string						eventID			= 35;
+	int64						eventVersion	= 36;
+}
+
+message TimeSeries
+{
+	message TimeResotuionValue
+	{
+		enum TimeResotuion
+		{
+			UNKNOWN_TIME_RESOLUTION = 0;
+			FIFTEEN_MINUTES = 1;
+			HOURLY = 2;
+			DAILY = 3;
+			WEEKLY = 4;
+			MONTHLY = 5;
+			YEARLY = 6;
+		}
+
+		TimeResotuion			Value			= 1;
+	}
+
+	string						area			= 1;
+	string						commodity		= 2;
+	string						symbol			= 3;
+	string						facilityType	= 4;
+	string						fuelType		= 5;
+	string						controlArea		= 6;
+	string						marketArea		= 7;
+	TimeResotuionValue			timeResolution	= 8;
+	string						unitMeasure		= 9;
+	string						unitID			= 10;
+	// series
+	double						value			= 11;
+	int64						timeStamp		= 12;
+
+	int64						modified		= 13;
+	int64						published		= 14;
+}
+

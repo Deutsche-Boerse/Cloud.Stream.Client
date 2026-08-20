@@ -1,0 +1,285 @@
+// Date:    08.03.2026
+// Version: 001.000.010
+
+syntax = "proto3";
+
+option go_package = "dev/ccs-service/dbag/gen/eex.derivatives";
+
+package eex.derivatives;
+
+message Identification
+{
+	message PutOrCallValue
+	{
+		enum OptionType
+		{
+			PUT = 0;
+			CALL = 1;
+		}
+
+		OptionType				Value			= 1;
+	}
+
+	enum InstrumentTypeValue
+	{
+		SIMPLE_INSTRUMENT = 0;
+		FUTURES_SPREAD = 1;
+		INTER_PRODUCT_SPREAD = 2;
+	}
+
+	message Leg
+	{
+		string					Cmdty			= 1;
+		string					Area			= 2;
+		string					ShortCode		= 3;
+		string					Maturity		= 4;
+	}
+
+	string						Cmdty			= 1;
+	string						Area			= 2;
+	string						ShortCode		= 3;
+	string						ExpiryDate		= 4;
+	string						TrdDate			= 5;
+	string						Currency		= 6;
+	string						UOM				= 7;
+	string						ProductISIN		= 8;
+	string						Maturity		= 9;
+	string						LongName		= 10;
+	string						DisplayName		= 11;
+	string						InstrumentISIN	= 12;
+	InstrumentTypeValue			InstrumentType	= 13;
+	double						StrikePx		= 14;
+	PutOrCallValue				OptionType		= 15;
+	repeated Leg				Legs			= 16;
+}
+
+message ReferenceData
+{
+	enum InstrumentStatusType
+	{
+		UNKNOWN_INSTRUMENT_STATUS = 0;
+		ACTIVE = 1;
+		PUBLISHED = 2;
+		INACTIVE = 3;
+	}
+
+	message SettlementMethodValue
+	{
+		enum SettlementMethod
+		{
+			UNKNOWN_SETTLEMENT_METHOD = 0;
+			CASH = 1;
+			PHYSICAL = 2;
+		}
+
+		SettlementMethod		Value			= 1;
+	}
+
+	message SettlementSubMethodValue
+	{
+		enum SettlementSubMethod
+		{
+			UNKNOWN_SETTLEMENT_SUB_METHOD = 0;
+			SHARES = 1;
+			DERIVATIVES = 2;
+			PAYMENT_VS_PAYMENT = 3;
+			NOTIONAL = 4;
+			CASCADE = 5;
+			OTHER = 6;
+			ENERGY = 7;
+		}
+
+		SettlementSubMethod		Value			= 1;
+	}
+
+	message ValuationMethodValue
+	{
+		enum ValuationMethod
+		{
+			UNKNOWN_VALUATION_METHOD = 0;
+			EQUITY = 1;
+			FUTURE = 2;
+		}
+
+		ValuationMethod			Value			= 1;
+	}
+
+	message ExerciseStyleValue
+	{
+		enum ExerciseStyle
+		{
+			UNKNOWN_EXERCISE_STYLE = 0;
+			EUROPEAN = 1;
+			AMERICAN = 2;
+		}
+
+		ExerciseStyle			Value			= 1;
+	}
+
+	message MaturityTypeValue
+	{
+		enum MaturityType
+		{
+			UNKNOWN_MATURITY_TYPE = 0;
+			DAY = 1;
+			WEEK = 2;
+			WEEKEND = 3;
+			MONTH = 4;
+			QUARTER = 5;
+			SEASON = 6;
+			YEAR = 7;
+		}
+
+		MaturityType			Value			= 1;
+	}
+
+	message ProductTypeValue
+	{
+		enum ProductType
+		{
+			UNKNOWN_PRODUCT_TYPE = 0;
+			OPTION = 1;
+			FUTURE = 2;
+			SPOT = 3;
+		}
+
+		ProductType				Value			= 1;
+	}
+
+
+
+	Identification				ID				= 1;
+
+	string						MIC				= 2;
+	ProductTypeValue			ProductType		= 3;
+	string						ContractDate	= 4;
+	string						ContractDateType= 5;
+	MaturityTypeValue			MaturityType	= 6;
+
+	int32						DisplayDay		= 7;
+	int32						DisplayWeek		= 8;
+	int32						DisplayMonth	= 9;
+	int32						DisplayQuarter	= 10;
+	string						DisplaySeason	= 11;
+	int32						DisplayYear		= 12;
+	int32						ContractVol		= 13;
+	string						ReportingMarket	= 14;
+	string						StartDate		= 15;
+	string						EndDate			= 16;
+	string						Start			= 17;
+	string						End				= 18;
+	string						SettlDate		= 19;
+	InstrumentStatusType		InstrumentStatus= 20;
+	string						UnderlyingInstrumentISIN= 21;
+	ExerciseStyleValue			ExerciseStyle	= 22;
+	ValuationMethodValue		ValuationMethod	= 23;
+	SettlementMethodValue		SettlMethod		= 24;
+	SettlementSubMethodValue	SettlSubMethod	= 25;
+	MaturityTypeValue			UnderlyingMaturityType	= 26;
+
+	int64						Tm				= 99;
+}
+
+message Trade
+{
+	enum TradeType
+	{
+		UNKNOWN_TRADE_TYPE = 0;
+		EXCHANGE = 1;
+		TRADE_REGISTRATION = 2;
+	}
+
+	enum UpdateAction
+	{
+		UNKNOWN_UPDATE_ACTION = 0;
+		NEW = 1;
+		DELETE = 2;
+	}
+
+	message AggressorSideValue
+	{
+		enum AggressorSide
+		{
+			UNKNOWN_AGGRESSOR_SIDE = 0;
+			SELL = 1;
+			BUY = 2;
+		}
+
+		AggressorSide			Value			= 1;
+	}
+
+
+	Identification				ID				= 1;
+
+	TradeType					TrdType			= 2;
+	UpdateAction				UpdtAct			= 3;
+	int64						TrdID			= 4;
+	AggressorSideValue			AgrsrAct		= 5;
+	double						Px				= 6;
+	double						Sz				= 7;
+	double						TrdVol			= 8;
+	int64						OTCTm			= 9;
+	bool						VolumeOnly		= 10;
+
+	int64						Tm				= 99;
+}
+
+message Settlement
+{
+	Identification				ID				= 1;
+
+	double						Px				= 2;
+
+	int64						Tm				= 99;
+	//string						UpdtAct			= 6; update action is always new
+}
+
+message OpenInterest
+{
+	enum StepPhaseType
+	{
+		UNKNOWN_STEPPHASE = 0;
+		START_OF_DAY = 1;
+		END_OF_DAY = 2;
+	}
+
+	Identification				ID				= 1;
+
+	double						GrossOpenInt	= 2;
+	double						GrossOpenIntSz	= 3;
+	double						NetOpenInt		= 4;
+	double						NetOpenIntSz	= 5;
+	StepPhaseType				StepPhase		= 6;
+
+	int64						Tm				= 99;
+	//string						UpdtAct			= 6; update action is always new
+}
+
+message TopOfBook
+{
+	message QuoteTypeValue
+	{
+		enum QuoteType
+		{
+			UNKNOWN_QUOTE_TYPE = 0;
+			EXPLICIT = 1;
+			IMPLIED = 2;
+		}
+
+		QuoteType				Value			= 1;
+	}
+
+	Identification				ID				= 1;
+
+	double						BidPx			= 2;
+	double						BidSz			= 3;
+	double						BidVol			= 4;
+	QuoteTypeValue				BidType			= 5;
+
+	double						AskPx			= 6;
+	double						AskSz			= 7;
+	double						AskVol			= 8;
+	QuoteTypeValue				AskType			= 9;
+
+	int64						Tm				= 99;
+}

@@ -1,0 +1,30 @@
+// Date:    10.02.2026
+// Version: 001.000.008
+
+syntax = "proto3";
+
+option go_package = "dev/ccs-service/dbag/gen/eex.analytics";
+
+package eex.analytics;
+
+message Index
+{
+	string						Cmdty			= 1;
+	string						Area			= 2;
+	string						Index			= 3;
+	string						LongName		= 4;
+	string						DeliveryDay		= 5;
+	int64						Start			= 6;
+	int64						End				= 7;
+	string						UOM				= 8;
+	string						Currency		= 9;
+	string						TrdDate			= 10;
+	//string						UpdtAct			= 12;
+	double						Px				= 11;
+	double						Vol				= 12;
+	string						BOMcode			= 13;
+	int64						SecurityAltID	= 14;
+
+	int64						Tm				= 99;
+}
+
