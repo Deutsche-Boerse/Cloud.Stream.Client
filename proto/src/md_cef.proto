@@ -1,5 +1,5 @@
-// Date:    21.04.2026
-// Version: 001.000.011
+// Date:    21.09.2026
+// Version: 001.000.010
 
 syntax = "proto3";
 
@@ -381,7 +381,7 @@ message Data
 		k = 11;		// FIX Out of Sequence
 		a = 12;		// FIX Volume Only
 		XR = 13;		// Retail 
-		DA = 14; 		// Auction Volume Discovery
+		DA = 14;		// Auction Volume Discovery
 	}
 
 	message PriceTypeValue
@@ -411,6 +411,20 @@ message Data
 		}
 
 		MarketSegmentStatus		Value			= 1;
+	}
+
+	message TESTradingSessionStatusValue
+	{
+		enum TESTradingSessionStatus	// FIX 25044
+		{
+			UNDEFINED = 0;
+			HALTED = 1;
+			OPEN = 2;
+			CLOSED = 3;
+			PRECLOSE = 5;
+		}
+
+		TESTradingSessionStatus		Value			= 1;
 	}
 
 	message MDEntryPrices
@@ -450,6 +464,7 @@ message Data
 	MarketConditionValue		MktCond			= 16;	// FIX 2705 - MarketCondition
 	SecurityStatusValue			TesStatus		= 17;	// FIX 25045 - TESSecurityStatus
 	MarketSegmentStatusValue	MktSegStat		= 18;	// FIX 2542 - Market Segment Status
+	TESTradingSessionStatusValue	TesTrdgSesStatus	= 19;	// FIX 25044 -  TESTradSesStatus
 
 	// Trade
 	Decimal						Px				= 21;	// FIX 270 - MDEntryPrice
