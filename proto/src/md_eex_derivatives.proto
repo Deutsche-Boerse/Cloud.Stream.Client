@@ -13,8 +13,9 @@ message Identification
 	{
 		enum OptionType
 		{
-			PUT = 0;
-			CALL = 1;
+			UNKNOWN_OPTION_TYPE = 0;
+			PUT = 1;
+			CALL = 2;
 		}
 
 		OptionType				Value			= 1;
@@ -22,9 +23,10 @@ message Identification
 
 	enum InstrumentTypeValue
 	{
-		SIMPLE_INSTRUMENT = 0;
-		FUTURES_SPREAD = 1;
-		INTER_PRODUCT_SPREAD = 2;
+		UNKNOWN_INSTRUMENT_TYPE_VALUE = 0;
+		SIMPLE_INSTRUMENT = 1;
+		FUTURES_SPREAD = 2;
+		INTER_PRODUCT_SPREAD = 3;
 	}
 
 	message Leg
@@ -231,7 +233,6 @@ message Settlement
 	double						Px				= 2;
 
 	int64						Tm				= 99;
-	//string						UpdtAct			= 6; update action is always new
 }
 
 message OpenInterest
@@ -252,7 +253,6 @@ message OpenInterest
 	StepPhaseType				StepPhase		= 6;
 
 	int64						Tm				= 99;
-	//string						UpdtAct			= 6; update action is always new
 }
 
 message TopOfBook
