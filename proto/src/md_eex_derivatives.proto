@@ -13,9 +13,8 @@ message Identification
 	{
 		enum OptionType
 		{
-			UNKNOWN_OPTION_TYPE = 0;
-			PUT = 1;
-			CALL = 2;
+			PUT = 0;
+			CALL = 1;
 		}
 
 		OptionType				Value			= 1;
@@ -23,10 +22,9 @@ message Identification
 
 	enum InstrumentTypeValue
 	{
-		UNKNOWN_INSTRUMENT_TYPE_VALUE = 0;
-		SIMPLE_INSTRUMENT = 1;
-		FUTURES_SPREAD = 2;
-		INTER_PRODUCT_SPREAD = 3;
+		SIMPLE_INSTRUMENT = 0;
+		FUTURES_SPREAD = 1;
+		INTER_PRODUCT_SPREAD = 2;
 	}
 
 	message Leg
