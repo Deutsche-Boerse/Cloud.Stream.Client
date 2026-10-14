@@ -1,0 +1,54 @@
+// Date:    18.07.2026
+// Version: 001.000.008
+
+syntax = "proto3";
+
+option go_package = "dev/ccs-service/dbag/gen/eex.auctions";
+
+package eex.auctions;
+
+message Report
+{
+	enum AuctStatusType
+	{
+		UNKNOWN_AUCTSTATUS = 0;
+		PUBL = 1;	// Published
+		OPEN = 2;	// Opened
+		CLOS = 3;	// Closed
+		ACCE = 4;	// Accepted
+		REJE = 5;	// Rejected
+		CANC = 6;	// Cancelled
+	}
+
+	string						Cmdty				= 1;
+	string						Area				= 2;
+	string						ShortCode			= 3;
+	string						AuctID				= 4;
+	string						ProductISIN			= 5;
+	AuctStatusType				AuctStatus			= 6;
+	string						AuctDate			= 7;
+	int64						StartTm				= 8;
+	int64						EndTm				= 9;
+	string						Currency			= 10;
+	double						AuctPx				= 11;
+	double						MinBid				= 12;
+	double						MaxBid				= 13;
+	double						MeanBid				= 14;
+	double						MedianBid			= 15;
+	int64						AuctTrdVol			= 16;
+	int64						TotalVolOfBids		= 17;
+	int32						NumberOfBids		= 18;
+	int32						NumberOfSuccessfulBids = 19;
+	double						AvgBidsPerBidder	= 20;
+	double						AvgBidSize			= 21;
+	double						AvgBidVolPerBidder	= 22;
+	double						StdDevVolPerBidder	= 23;
+	double						AvgSuccessfulBidVolPerBidder = 24;
+	double						StdDevSuccessfulBidVolPerBidder = 25;
+	double						ConvertRatio		= 26;
+	int32						NumberOfBidders		= 27;
+	int32						NumberOfSuccessfulBidders = 28;
+	double						TotalAuctRev		= 29;
+
+	int64						Tm					= 99;
+}
