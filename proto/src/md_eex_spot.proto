@@ -7,6 +7,14 @@ option go_package = "dev/ccs-service/dbag/gen/eex.spot";
 
 package eex.spot;
 
+enum UpdateAction
+{
+	UNKNOWN_UPDATE_ACTION = 0;
+	NEW = 1;
+	UPDATE = 2;
+	DELETE = 3;
+}
+
 message Identification
 {
 	string						Cmdty			= 1;
@@ -18,8 +26,8 @@ message Identification
 	string						Currency		= 7;
 	string						TrdDate			= 8;
 	double						ContractVol		= 9;
-	int64						Start			= 10;
-	int64						End				= 11;
+	string						Start			= 10;
+	string						End				= 11;
 	int32						DeliveryHours	= 12;
 }
 
@@ -46,22 +54,14 @@ message ReferenceData
 	Identification				ID				= 1;
 
 	ProductTypeValue			Product			= 2;
-	int64						StartTm			= 3;
-	int64						EndTm			= 4;
+	string						StartTm			= 3;
+	string						EndTm			= 4;
 
 	int64						Tm				= 99;
 }
 
 message Trade
 {
-	enum UpdateAction
-	{
-		UNKNOWN_UPDATE_ACTION = 0;
-		NEW = 1;
-		UPDATE = 2;
-		DELETE = 3;
-	}
-
 	message AggressorSideValue
 	{
 		enum AggressorSide
@@ -77,10 +77,10 @@ message Trade
 	Identification				ID				= 1;
 
 	UpdateAction				UpdtAct			= 2;
-	string						TrdID			= 3;
-	int32						TrdVersion		= 4;
-	string						RelationshipID	= 5;
-	string						GroupID			= 6;
+	int64						TrdID			= 3;
+	string						TrdVersion		= 4;
+	int64						RelationshipID	= 5;
+	int64						GroupID			= 6;
 	AggressorSideValue			AgrsrAct		= 7;
 	bool						FromBrokenSpread= 8;
 	double						Px				= 9;
@@ -108,6 +108,60 @@ message TopOfBook
 	double						BidSz			= 3;
 	double						AskPx			= 4;
 	double						AskSz			= 5;
+
+	int64						Tm				= 99;
+}
+
+message Order
+{
+	message SideValue
+	{
+		enum Side
+		{
+			UNKNOWN_SIDE = 0;
+			ASK = 1;
+			BID = 2;
+		}
+
+		Side					Value			= 1;
+	}
+
+	message OrderTypeValue
+	{
+		enum OrderType
+		{
+			UNKNOWN_ORDERTYPE = 0;
+			GOOD_TILL_DATE = 1;
+			GOOD_TILL_CANCELLED = 2;
+			GOOD_FOR_DAY = 3;
+		}
+
+		OrderType				Value			= 1;
+	}
+
+	message StatusValue
+	{
+		enum Status
+		{
+			UNKNOWN_STATUS = 0;
+			FIRM = 1;
+			WITHHELD = 2;
+		}
+
+		Status					Value			= 1;
+	}
+
+	Identification				ID				= 1;
+
+	UpdateAction				UpdtAct			= 2;
+	int64						EngineID		= 3;
+	int64						OrderID			= 4;
+	int64						RefOrderID		= 5;
+	double						Px				= 6;
+	int64						Sz				= 7;
+	SideValue					Side			= 8;
+	OrderTypeValue				Type			= 9;
+	StatusValue					Sts				= 10;
 
 	int64						Tm				= 99;
 }

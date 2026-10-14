@@ -1,7 +1,7 @@
 -include Makefile.local
 
 all: mdstream-client-cpp mdstream-client-python
-
+python: mdstream-client-python
 include .devcontainer/rules.mk
 
 dir := proto

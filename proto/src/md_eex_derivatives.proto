@@ -13,8 +13,9 @@ message Identification
 	{
 		enum OptionType
 		{
-			PUT = 0;
-			CALL = 1;
+			UNKNOWN_OPTION_TYPE = 0;
+			PUT = 1;
+			CALL = 2;
 		}
 
 		OptionType				Value			= 1;
@@ -22,9 +23,10 @@ message Identification
 
 	enum InstrumentTypeValue
 	{
-		SIMPLE_INSTRUMENT = 0;
-		FUTURES_SPREAD = 1;
-		INTER_PRODUCT_SPREAD = 2;
+		UNKNOWN_INSTRUMENT_TYPE_VALUE = 0;
+		SIMPLE_INSTRUMENT = 1;
+		FUTURES_SPREAD = 2;
+		INTER_PRODUCT_SPREAD = 3;
 	}
 
 	message Leg
@@ -32,7 +34,7 @@ message Identification
 		string					Cmdty			= 1;
 		string					Area			= 2;
 		string					ShortCode		= 3;
-		string					Maturity		= 4;
+		int64					Maturity		= 4;
 	}
 
 	string						Cmdty			= 1;
@@ -43,7 +45,7 @@ message Identification
 	string						Currency		= 6;
 	string						UOM				= 7;
 	string						ProductISIN		= 8;
-	string						Maturity		= 9;
+	int64						Maturity		= 9;
 	string						LongName		= 10;
 	string						DisplayName		= 11;
 	string						InstrumentISIN	= 12;
@@ -220,6 +222,7 @@ message Trade
 	double						TrdVol			= 8;
 	int64						OTCTm			= 9;
 	bool						VolumeOnly		= 10;
+	bool						FromBrokenSpread= 11;
 
 	int64						Tm				= 99;
 }

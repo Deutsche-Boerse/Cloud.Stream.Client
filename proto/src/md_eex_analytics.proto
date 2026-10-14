@@ -14,8 +14,8 @@ message Index
 	string						Index			= 3;
 	string						LongName		= 4;
 	string						DeliveryDay		= 5;
-	int64						Start			= 6;
-	int64						End				= 7;
+	string						Start			= 6;
+	string						End				= 7;
 	string						UOM				= 8;
 	string						Currency		= 9;
 	string						TrdDate			= 10;
@@ -27,4 +27,3 @@ message Index
 
 	int64						Tm				= 99;
 }
-
