@@ -1,7 +1,9 @@
 // Date:    21.09.2026
-// Version: 001.000.010
+// Version: 001.000.012
 
 syntax = "proto3";
+
+option go_package = "dev/ccs-service/dbag/gen/dbag.cef";
 
 import "google/protobuf/wrappers.proto";
 
@@ -381,7 +383,7 @@ message Data
 		k = 11;		// FIX Out of Sequence
 		a = 12;		// FIX Volume Only
 		XR = 13;		// Retail 
-		DA = 14;		// Auction Volume Discovery
+		DA = 14;		// AuctionVolumeDiscovery
 	}
 
 	message PriceTypeValue
@@ -525,4 +527,3 @@ message MarketData
 	Instrument					Instrmt			= 3;	// FIX: Instrument
 	Data						Dat				= 4;
 }
-
